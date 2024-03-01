@@ -2,7 +2,6 @@ import 'package:alnasheet/view/components/go_back.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:alnasheet/controller/my_attendance_screen_provider.dart';
 import 'package:alnasheet/view/components/header.dart';
 
 class MarkAttendanceScreen extends StatelessWidget {
@@ -10,7 +9,6 @@ class MarkAttendanceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final myAttendanceScreenProvider=Provider.of<MyAttendanceScreenProvider>(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -32,7 +30,7 @@ class MarkAttendanceScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               border: Border.all(color: Colors.grey, width: 1)),
-                          child: Text(myAttendanceScreenProvider.fromDate,style: GoogleFonts.lato(),),
+                          child: Text("564/35/53",style: GoogleFonts.lato(),),
                         ),
                         SizedBox(height: 50,),
                         InkWell(

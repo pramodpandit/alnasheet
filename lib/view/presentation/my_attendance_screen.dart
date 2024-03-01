@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-import 'package:alnasheet/controller/my_attendance_screen_provider.dart';
 import 'package:alnasheet/view/components/header.dart';
 import 'package:alnasheet/view/presentation/mark_attendance_screen.dart';
 
@@ -75,9 +74,7 @@ class MyAttendanceScreen extends StatelessWidget {
                                 children: [
                                   const Icon(Icons.calendar_month),
                                   const SizedBox(width: 10),
-                                  Consumer<MyAttendanceScreenProvider>(builder: (context, value, child) {
-                                    return Text(value.fromDate,style: GoogleFonts.lato(),);
-                                  },),
+                              Text("3/43/343",style: GoogleFonts.lato(),),
                                 ],
                               ),
                             ),
@@ -104,9 +101,7 @@ class MyAttendanceScreen extends StatelessWidget {
                                 children: [
                                   const Icon(Icons.calendar_month),
                                   const SizedBox(width: 10),
-                                  Consumer<MyAttendanceScreenProvider>(builder: (context, value, child) {
-                                    return Text(value.toDate,style: GoogleFonts.lato(),);
-                                  },),
+                              Text("43/43/4544",style: GoogleFonts.lato(),),
                                 ],
                               ),
                             ),

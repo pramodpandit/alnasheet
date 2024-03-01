@@ -51,6 +51,7 @@ dependencies:
   flutter_phosphor_icons: ^0.0.1+6
   dio: any
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
