@@ -170,11 +170,11 @@ class LoginScreen extends StatelessWidget {
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(5),
                                           color: Color(0xFF222B65)),
-                                      child:  Text(
+                                      child: Text(
                                         "Log In",
                                         style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
                                       ),
-                                    )
+                                    ),
                                   ),
                                   SizedBox(height: 20,),
                                 ],

@@ -30,7 +30,7 @@ class MarkAttendanceScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               border: Border.all(color: Colors.grey, width: 1)),
-                          child: Text("28/78/7867",style: GoogleFonts.lato(),),
+                          child: Text("564/35/53",style: GoogleFonts.lato(),),
                         ),
                         SizedBox(height: 50,),
                         InkWell(

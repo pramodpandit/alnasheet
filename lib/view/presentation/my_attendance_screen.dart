@@ -74,7 +74,7 @@ class MyAttendanceScreen extends StatelessWidget {
                                 children: [
                                   const Icon(Icons.calendar_month),
                                   const SizedBox(width: 10),
-                              Text("43/65/3445",style: GoogleFonts.lato(),)
+                              Text("3/43/343",style: GoogleFonts.lato(),),
                                 ],
                               ),
                             ),
@@ -101,7 +101,7 @@ class MyAttendanceScreen extends StatelessWidget {
                                 children: [
                                   const Icon(Icons.calendar_month),
                                   const SizedBox(width: 10),
-                              Text("75/56/3674",style: GoogleFonts.lato(),)
+                              Text("43/43/4544",style: GoogleFonts.lato(),),
                                 ],
                               ),
                             ),
