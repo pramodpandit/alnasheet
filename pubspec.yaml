@@ -45,6 +45,11 @@ dependencies:
   permission_handler: ^11.2.0
   contacts_service: ^0.6.3
   nb_utils: ^6.1.2
+  bouncing_widget: ^2.0.0
+  loading_animation_widget: ^1.2.0+4
+  flutter_screenutil: ^5.8.2
+  flutter_phosphor_icons: ^0.0.1+6
+  dio: any
 
 dev_dependencies:
   flutter_test:

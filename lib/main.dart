@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:alnasheet/controller/login_screen_provider.dart';
-import 'package:alnasheet/controller/my_attendance_screen_provider.dart';
 import 'package:alnasheet/view/spalsh_screen.dart';
 
 void main() async{
@@ -17,8 +15,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => LoginScreenProvider()),
-        ChangeNotifierProvider(create: (context) => MyAttendanceScreenProvider(),)
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
