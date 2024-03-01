@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:alnasheet/view/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -22,7 +21,7 @@ class LoginScreen extends StatelessWidget {
     loginScreenProvider.changeLoadingStatus();
     Object body={"username":username.text.toString(),"password":password.text.toString() ,"gcm_id":"1234555" };
     http.Response response;
-    response= await http.post(Uri.parse(dotenv.env["LOGIN_API"]!),
+    response= await http.post(Uri.parse(""),
     body: jsonEncode(body),
     );
     Map responseData=jsonDecode(response.body);
