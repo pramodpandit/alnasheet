@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
@@ -9,18 +10,22 @@ import 'data/network/api_service.dart';
 import 'data/network/interceptors.dart';
 
 void main() async{
+
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top]);
+
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.white,
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+    systemNavigationBarIconBrightness: Brightness.dark,
+  ));
   await initialize();
   final sharedPreferences = await SharedPreferences.getInstance();
   Dio dio = Dio();
-  dio.interceptors.add(AppInterceptors());
-  // dio.interceptors.add(DioCacheManager(CacheConfig(
-  //   baseUrl: ApiService.host,
-  //   defaultMaxAge: const Duration(minutes: 30),
-  //   defaultMaxStale: const Duration(days: 2),
-  // )).interceptor);
   final ApiService apiService = ApiService(dio);
-  runApp( MyApp(sharedPreferences, apiService));
+  runApp(MyApp(sharedPreferences, apiService));
 }
 
 class MyApp extends StatelessWidget {

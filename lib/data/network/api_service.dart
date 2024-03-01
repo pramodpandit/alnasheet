@@ -10,9 +10,9 @@ class ApiService {
   final Dio dio;
   ApiService(this.dio);
   // static const host = "https://krishnadeep.com/toxmo_electric/";
-  static const host = "https://freeze.talocare.co.in/";
+  static const host = "http://udyotwork.co.in/fleeting_management_demo/";
 
-  static const _baseUrl = "${host}api/";
+  static const _baseUrl = "${host}Web/";
 
   dynamic postRequest(String subUrl, Map<String, dynamic> inputData, {bool withFile = false, bool requireToken=false, bool cacheRequest = true, bool forceRefresh = false}) async {
     try {
@@ -29,12 +29,6 @@ class ApiService {
         "$url",
         data: withFile ? FormData.fromMap(inputData) : inputData,
         options: option,
-        // options: cacheRequest ? buildCacheOptions(
-        //   const Duration(minutes: 30),
-        //   maxStale: const Duration(days: 2),
-        //   forceRefresh: forceRefresh,
-        //   options: option,
-        // ) : option,
       );
 
       if (res.statusCode == 200) {
