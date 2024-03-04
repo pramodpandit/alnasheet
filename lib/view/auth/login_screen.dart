@@ -16,10 +16,7 @@ import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
-<<<<<<< HEAD
-  
-=======
->>>>>>> 5c01f45066bfa15d17142af29e945902d217fccb
+
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -168,11 +165,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   SizedBox(height: 25,),
                                   InkWell(
                                     onTap: () {
-<<<<<<< HEAD
-                                      DashboardScreen().launch(context,pageRouteAnimation: PageRouteAnimation.Slide);
-=======
+
                                       authBloc.login(context);
->>>>>>> 5c01f45066bfa15d17142af29e945902d217fccb
                                     },
                                     child: Container(
                                       alignment: Alignment.center,
