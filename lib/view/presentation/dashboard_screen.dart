@@ -36,205 +36,219 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children:[
-          SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
-            child: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFFFC6E7),
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.elliptical(70, 20),
-                        bottomRight: Radius.elliptical(70, 20)),
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 10,),
-                      Image.asset(
-                        "assets/images/Al.Nasheet-logo.png",
-                        width: 150,
-                      ),
-                      SizedBox(
-                        height: 50,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              MyAccountScreen().launch(context,pageRouteAnimation: PageRouteAnimation.Slide);
-                            },
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                CircleAvatar(
-                                  child: Image.network(
-                                    "https://cdn-icons-png.flaticon.com/512/299/299310.png",
-                                    width: 50,
+        child: ValueListenableBuilder(
+          valueListenable: bloc.isLoadingUserInformation,
+          builder: (context, bool isLoading, child) {
+            if(isLoading){
+              return Center(child: CircularProgressIndicator(),);
+            }
+            return ValueListenableBuilder(valueListenable: bloc.informationData,
+                builder: (context, userinformation, child) {
+              return Stack(
+                  alignment: Alignment.bottomCenter,
+                  children:[
+                    SingleChildScrollView(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                color: Color(0xFFFFC6E7),
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.elliptical(70, 20),
+                                    bottomRight: Radius.elliptical(70, 20)),
+                              ),
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 10,),
+                                  Image.asset(
+                                    "assets/images/Al.Nasheet-logo.png",
+                                    width: 150,
                                   ),
+                                  SizedBox(
+                                    height: 50,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          MyAccountScreen().launch(context,pageRouteAnimation: PageRouteAnimation.Slide);
+                                        },
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            CircleAvatar(
+                                              child: Image.network(
+                                                "https://cdn-icons-png.flaticon.com/512/299/299310.png",
+                                                width: 50,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              "Welcome, ${userinformation['das_first_name'] ??''} ${userinformation['das_last_name']??''}",
+                                              style: GoogleFonts.lato(color: Color(0xFF222B65),fontWeight: FontWeight.bold),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(1000)),
+                                        child: Icon(Icons.notifications),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Options(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                  child: MyAttendanceScreen(),
+                                                  type: PageTransitionType.rightToLeft));
+                                        },
+                                        image:
+                                        "assets/images/dash_img_1.png",
+                                        title: "My Attendance",
+                                        count: 10,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Options(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                  child: VehicleInspectionScreen(),
+                                                  type: PageTransitionType.rightToLeft));
+                                        },
+                                        image:
+                                        "assets/images/dash_img_2.png",
+                                        title: "Vehicle Inspection",
+                                        count: 8,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: 5,
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Options(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                  child: CashVarianceScreen(),
+                                                  type: PageTransitionType.rightToLeft));
+                                        },
+                                        image:
+                                        "assets/images/dash_img_3.png",
+                                        title: "Cash Variance",
+                                        count: 10,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Options(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                  child: TrafficFineScreen(),
+                                                  type: PageTransitionType.rightToLeft));
+                                        },
+                                        image:
+                                        "assets/images/dash_img_4.png",
+                                        title: "Traffic Fine",
+                                        count: 8,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  "Welcome, John Smith",
-                                  style: GoogleFonts.lato(color: Color(0xFF222B65),fontWeight: FontWeight.bold),
-                                )
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Options(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                child: MissingShipmentScreen(),
+                                                type: PageTransitionType.rightToLeft,
+                                              ));
+                                        },
+                                        image:
+                                        "assets/images/dash_img_5.png",
+                                        title: "Missing Shipment",
+                                        count: 10,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Options(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                  child: SallekScreen(),
+                                                  type: PageTransitionType.rightToLeft));
+                                        },
+                                        image:
+                                        "assets/images/dash_img_6.png",
+                                        title: "Sallek",
+                                        count: 8,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
-                          ),
+                            SizedBox(
+                              height: 30,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // Text("Powered by Aarvy",style: GoogleFonts.nunito(color: Color(0xFFE70A8C),fontWeight: FontWeight.bold),),
                           Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(1000)),
-                            child: Icon(Icons.notifications),
-                          )
+                            height: 10,
+                            width: double.infinity,
+                            color: Color(0xFF222B65),
+                          ),
                         ],
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Options(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      child: MyAttendanceScreen(),
-                                      type: PageTransitionType.rightToLeft));
-                            },
-                            image:
-                            "assets/images/dash_img_1.png",
-                            title: "My Attendance",
-                            count: 10,
-                          ),
-                        ),
-                        Expanded(
-                          child: Options(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      child: VehicleInspectionScreen(),
-                                      type: PageTransitionType.rightToLeft));
-                            },
-                            image:
-                            "assets/images/dash_img_2.png",
-                            title: "Vehicle Inspection",
-                            count: 8,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Options(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      child: CashVarianceScreen(),
-                                      type: PageTransitionType.rightToLeft));
-                            },
-                            image:
-                            "assets/images/dash_img_3.png",
-                            title: "Cash Variance",
-                            count: 10,
-                          ),
-                        ),
-                        Expanded(
-                          child: Options(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      child: TrafficFineScreen(),
-                                      type: PageTransitionType.rightToLeft));
-                            },
-                            image:
-                            "assets/images/dash_img_4.png",
-                            title: "Traffic Fine",
-                            count: 8,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Options(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                    child: MissingShipmentScreen(),
-                                    type: PageTransitionType.rightToLeft,
-                                  ));
-                            },
-                            image:
-                            "assets/images/dash_img_5.png",
-                            title: "Missing Shipment",
-                            count: 10,
-                          ),
-                        ),
-                        Expanded(
-                          child: Options(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      child: SallekScreen(),
-                                      type: PageTransitionType.rightToLeft));
-                            },
-                            image:
-                            "assets/images/dash_img_6.png",
-                            title: "Sallek",
-                            count: 8,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 30,
-                )
-              ],
-            ),
-          ),
-        ),
-          Container(
-            color: Colors.white,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Text("Powered by Aarvy",style: GoogleFonts.nunito(color: Color(0xFFE70A8C),fontWeight: FontWeight.bold),),
-                Container(
-                  height: 10,
-                  width: double.infinity,
-                  color: Color(0xFF222B65),
-                ),
-              ],
-            ),
-          )
-        ]
-      ),
-    ));
+                      ),
+                    )
+                  ]
+              );
+
+                },);
+          },
+        )
+    )
+
+        );
   }
 }
 
