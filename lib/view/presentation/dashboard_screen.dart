@@ -10,10 +10,28 @@ import 'package:alnasheet/view/presentation/my_attendance_screen.dart';
 import 'package:alnasheet/view/presentation/sallek_screen.dart';
 import 'package:alnasheet/view/presentation/traffic_fine_screen.dart';
 import 'package:alnasheet/view/presentation/vehicle_screen.dart';
+import 'package:provider/provider.dart';
 
-class DashboardScreen extends StatelessWidget {
+import '../../bloc/user_information_bloc.dart';
+import '../../data/repository/user_information_repo.dart';
+
+class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  late UserInformationBloc bloc;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    bloc= UserInformationBloc(context.read<UserInformationRepo>());
+    bloc.UserInformation();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

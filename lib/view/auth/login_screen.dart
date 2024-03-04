@@ -15,21 +15,6 @@ import 'package:alnasheet/view/presentation/dashboard_screen.dart';
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
   
-  void loginToDashboard(BuildContext context,TextEditingController username,TextEditingController password)async{
-    Object body={"username":username.text.toString(),"password":password.text.toString() ,"gcm_id":"1234555" };
-    http.Response response;
-    response= await http.post(Uri.parse(""),
-    body: jsonEncode(body),
-    );
-    Map responseData=jsonDecode(response.body);
-    if(responseData["result"]["success"]==1){
-      DashboardScreen().launch(context,pageRouteAnimation: PageRouteAnimation.Slide);
-      toast(responseData["result"]["message"]);
-      await setValue(ConstData.CURRENT_USER, responseData["result"]["data"]);
-    }else{
-      toast(responseData["result"]["message"]);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +146,7 @@ class LoginScreen extends StatelessWidget {
                                   SizedBox(height: 25,),
                                   InkWell(
                                     onTap: () {
-                                      // loginToDashboard(context,loginScreenProvider.usernameController, loginScreenProvider.passwordController);
+                                      DashboardScreen().launch(context,pageRouteAnimation: PageRouteAnimation.Slide);
                                     },
                                     child: Container(
                                       alignment: Alignment.center,

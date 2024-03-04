@@ -2,10 +2,28 @@ import 'package:alnasheet/view/components/go_back.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:alnasheet/view/components/header.dart';
+import 'package:provider/provider.dart';
 
-class CashVarianceScreen extends StatelessWidget {
+import '../../bloc/cash_varuance_bloc.dart';
+import '../../data/repository/cash_variance_repo.dart';
+
+class CashVarianceScreen extends StatefulWidget {
   const CashVarianceScreen({super.key});
 
+  @override
+  State<CashVarianceScreen> createState() => _CashVarianceScreenState();
+}
+
+class _CashVarianceScreenState extends State<CashVarianceScreen> {
+  late CashVarianceBloc bloc;
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    bloc = CashVarianceBloc(context.read<CashVariance>());
+    bloc.fetchCashVariance();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

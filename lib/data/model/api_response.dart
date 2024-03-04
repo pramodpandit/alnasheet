@@ -23,22 +23,22 @@ class ApiResponse<T> {
 
 class ApiResponse2<T> {
   ApiResponse2({
-      required this.status,
+      required this.success,
       this.message,
-      this.data,});
+      this.result,});
 
-  ApiResponse2.fromJson(dynamic json, [this.data]) {
-    status = json['status'];
+  ApiResponse2.fromJson(dynamic json, [this.result]) {
+    success = json['status'];
     message = json['message'];
   }
-  late bool status;
+  late int success;
   String? message;
-  T? data;
+  T? result;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['status'] = status;
-    map['data'] = data;
+    map['status'] = success;
+    map['data'] = result;
     return map;
   }
 }
