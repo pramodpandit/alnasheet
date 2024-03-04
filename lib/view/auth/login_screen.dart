@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:alnasheet/bloc/authBloc.dart';
+import 'package:alnasheet/data/repository/AuthRepository.dart';
 import 'package:alnasheet/view/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,14 +10,30 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:nb_utils/nb_utils.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:provider/provider.dart';
 import 'package:alnasheet/view/auth/forgotpass_screen.dart';
 import 'package:alnasheet/view/presentation/dashboard_screen.dart';
+import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+<<<<<<< HEAD
   
+=======
+>>>>>>> 5c01f45066bfa15d17142af29e945902d217fccb
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  late AuthBloc authBloc;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    authBloc =AuthBloc(context.read<AuthRepository>());
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +90,7 @@ class LoginScreen extends StatelessWidget {
                                   Text("Username",style: GoogleFonts.nunito(color: Colors.black,fontWeight: FontWeight.bold),),
                                   SizedBox(height: 7,),
                               TextFormField(
-                                // controller: value.usernameController,
+                                controller: authBloc.username,
                                 cursorColor: Colors.black,
                                 decoration: InputDecoration(
                                   contentPadding: EdgeInsets.symmetric(
@@ -103,38 +121,42 @@ class LoginScreen extends StatelessWidget {
                                   SizedBox(height: 15,),
                                   Text("Password",style: GoogleFonts.nunito(color: Colors.black,fontWeight: FontWeight.bold),),
                                   SizedBox(height: 7,),
-                              TextFormField(
-                                // controller: value.passwordController,
-                                keyboardType: TextInputType.visiblePassword,
-                                cursorColor: Colors.black,
-                                // obscureText: value.securePass,
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 5),
-                                  border: OutlineInputBorder(
-                                    borderSide:
-                                    BorderSide(color: Colors.grey, width: 1),
-                                    borderRadius: BorderRadius.circular(5),
+                              ValueListenableBuilder(
+                                valueListenable: authBloc.securePassword,
+                                builder: (context, securePassword, child) {
+                                return TextFormField(
+                                  controller: authBloc.password,
+                                  keyboardType: TextInputType.visiblePassword,
+                                  cursorColor: Colors.black,
+                                  obscureText: securePassword,
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 5),
+                                    border: OutlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.grey, width: 1),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.grey, width: 1),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    prefixIcon: Icon(
+                                      Icons.lock,
+                                      color: Colors.grey,
+                                    ),
+                                    suffix: InkWell(
+                                      onTap: () {
+                                        authBloc.securePassword.value = !securePassword;
+                                      },
+                                      child:FaIcon(securePassword? FontAwesomeIcons.solidEye:FontAwesomeIcons.solidEyeSlash,size: 15,color: Colors.grey,),
+                                    ),
+                                    hintText: "Password",
+                                    hintStyle: GoogleFonts.nunito(color: Colors.grey),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                    BorderSide(color: Colors.grey, width: 1),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  prefixIcon: Icon(
-                                    Icons.lock,
-                                    color: Colors.grey,
-                                  ),
-                                  // suffix: InkWell(
-                                  //   onTap: () {
-                                  //     // value.showPass();
-                                  //   },
-                                  //   child:FaIcon(value.securePass? FontAwesomeIcons.solidEye:FontAwesomeIcons.solidEyeSlash,size: 15,color: Colors.grey,),
-                                  // ),
-                                  hintText: "Password",
-                                  hintStyle: GoogleFonts.nunito(color: Colors.grey),
-                                ),
-                              ),
+                                );
+                              },),
                                   SizedBox(height: 10,),
                                   Align(
                                       alignment: Alignment.centerRight,
@@ -146,7 +168,11 @@ class LoginScreen extends StatelessWidget {
                                   SizedBox(height: 25,),
                                   InkWell(
                                     onTap: () {
+<<<<<<< HEAD
                                       DashboardScreen().launch(context,pageRouteAnimation: PageRouteAnimation.Slide);
+=======
+                                      authBloc.login(context);
+>>>>>>> 5c01f45066bfa15d17142af29e945902d217fccb
                                     },
                                     child: Container(
                                       alignment: Alignment.center,
@@ -155,10 +181,21 @@ class LoginScreen extends StatelessWidget {
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(5),
                                           color: Color(0xFF222B65)),
-                                      child: Text(
-                                        "Log In",
-                                        style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
-                                      ),
+                                      child: ValueListenableBuilder(
+                                        valueListenable: authBloc.loginLoading,
+                                        builder: (context, loginLoading, child) {
+                                        if(loginLoading){
+                                          return SizedBox(
+                                            height: 20,
+                                            width: 20,
+                                            child: CircularProgressIndicator(color: Colors.white,strokeWidth: 2,),
+                                          );
+                                        }
+                                        return  Text(
+                                          "Log In",
+                                          style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+                                        );
+                                      },),
                                     ),
                                   ),
                                   SizedBox(height: 20,),

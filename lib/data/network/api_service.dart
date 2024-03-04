@@ -14,16 +14,17 @@ class ApiService {
 
   static const _baseUrl = "${host}Web/";
 
-  dynamic postRequest(String subUrl, Map<String, dynamic> inputData, {bool withFile = false, bool requireToken=false, bool cacheRequest = true, bool forceRefresh = false}) async {
+  dynamic postRequest(String subUrl, Map<String, dynamic> inputData, {bool withFile = false, cacheRequest = true, bool forceRefresh = false}) async {
     try {
       String url = "$_baseUrl$subUrl";
       debugPrint('---POST1 url $url');
       debugPrint('---Params $inputData');
       Options option = Options(
-        contentType: Headers.formUrlEncodedContentType,
-        headers: requireToken ? {
-          'token': true,
-        } : {},
+        contentType: Headers.jsonContentType,
+        headers: {
+          "client_id" : "ANTFM357",
+          "access_key" : "Q2RGZEVJVG1iZFBXckFJTkxYM2ZlTGxxUkNyOUlyeGg=",
+        },
       );
       Response res = await dio.post(
         "$url",
