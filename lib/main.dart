@@ -1,3 +1,4 @@
+import 'package:alnasheet/data/repository/AuthRepository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,15 +34,21 @@ class MyApp extends StatelessWidget {
 
   final SharedPreferences prefs;
   final ApiService apiService;
+
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
+    return MultiProvider(
+      providers: [
+          Provider<AuthRepository>.value(value: AuthRepository(prefs, apiService)),
+    ],
+    child: ScreenUtilInit(
         designSize: const Size(375, 812),
         builder: (context, _) {
           return const MaterialApp(
             debugShowCheckedModeBanner: false,
             home: SplashScreen(),
           );
-        });
+        }),
+    );
   }
 }

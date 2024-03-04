@@ -19,17 +19,22 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    var userData =  getJSONAsync(ConstData.CURRENT_USER);
-    print(userData);
-    if(userData.isEmpty){
+    moveToNextScreen();
+  }
+
+  void moveToNextScreen()async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var userId = pref.getString("uid");
+    var userToken = pref.getString("utoken");
+    if(userId == null && userToken == null){
       Timer(
         Duration(seconds: 3),
-        () => LoginScreen().launch(context,pageRouteAnimation: PageRouteAnimation.Slide,isNewTask: true),
+            () => LoginScreen().launch(context,pageRouteAnimation: PageRouteAnimation.Slide,isNewTask: true),
       );
     }else{
       Timer(
-          Duration(seconds: 3),
-              () => DashboardScreen().launch(context,pageRouteAnimation: PageRouteAnimation.Slide,isNewTask: true),
+        Duration(seconds: 3),
+            () => DashboardScreen().launch(context,pageRouteAnimation: PageRouteAnimation.Slide,isNewTask: true),
       );
     }
   }
