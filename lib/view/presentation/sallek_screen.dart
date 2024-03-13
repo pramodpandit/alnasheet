@@ -23,6 +23,7 @@ class _SallekScreenState extends State<SallekScreen> {
     bloc = SallekBloc(context.read<SallekRepo>());
     bloc.getSallekList();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +39,7 @@ class _SallekScreenState extends State<SallekScreen> {
                   SizedBox(
                     height: 30,
                   ),
+
                   Container(
                     width: double.infinity,
                     child: ValueListenableBuilder(

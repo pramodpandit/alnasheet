@@ -50,7 +50,7 @@ dependencies:
   flutter_screenutil: ^5.8.2
   flutter_phosphor_icons: ^0.0.1+6
   dio: any
-
+  intl: any
 
 dev_dependencies:
   flutter_test:
