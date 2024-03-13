@@ -52,6 +52,7 @@ class _TrafficFineScreenState extends State<TrafficFineScreen> {
                           );
                         }
                       return DataTable(
+                          columnSpacing: 10.0,
                           columns: [
                             DataColumn(
                                 label: Text(
@@ -63,26 +64,40 @@ class _TrafficFineScreenState extends State<TrafficFineScreen> {
                                   "Fine",
                                   style: GoogleFonts.lato(fontWeight: FontWeight.bold),
                                 )),
-                            // DataColumn(
-                            //     label: Text(
-                            //       "",
-                            //       style: GoogleFonts.lato(fontWeight: FontWeight.bold),
-                            //     )),
-                            // DataColumn(
-                            //     label: Text(
-                            //       "",
-                            //       style: GoogleFonts.lato(fontWeight: FontWeight.bold),
-                            //     )),
+                            DataColumn(
+                                label: Text(
+                                  "Fine Amount",
+                                  style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                                )),
+                            DataColumn(
+                                label: Text(
+                                  "Fine Number",
+                                  style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                                )),
                           ],
                           rows: trafficFineList.map((e) => DataRow(cells: [
                               DataCell(Text(
                                 e['on_date'].toString(),
                                 style: GoogleFonts.lato(),
                               )),
-                              DataCell(Text(
-                                e['total_amount'].toString(),
-                                style: GoogleFonts.lato(),
+                              DataCell(Center(
+                                child: Text(
+                                  e['total_amount'].toString(),
+                                  style: GoogleFonts.lato(),
+                                ),
                               )),
+                            DataCell(Center(
+                              child: Text(
+                                e['fine_amount'].toString(),
+                                style: GoogleFonts.lato(),
+                              ),
+                            )),
+                            DataCell(Center(
+                              child: Text(
+                                e['fine_number'].toString(),
+                                style: GoogleFonts.lato(),
+                              ),
+                            )),
                             ]),).toList()
                           );
                     },),

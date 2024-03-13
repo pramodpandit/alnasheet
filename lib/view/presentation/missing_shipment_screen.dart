@@ -79,7 +79,7 @@ class _MissingShipmentScreenState extends State<MissingShipmentScreen> {
                                           )),
                                       DataColumn(
                                           label: Text(
-                                            "Vehicle_no",
+                                            "Vehicle No",
                                             style: GoogleFonts.lato(fontWeight: FontWeight.bold),
                                           )),
                                     ],

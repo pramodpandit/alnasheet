@@ -43,51 +43,64 @@ class _SallekScreenState extends State<SallekScreen> {
                   Container(
                     width: double.infinity,
                     child: ValueListenableBuilder(
-                      valueListenable: bloc.sallekList,
-                      builder: (context, sallekList, child) {
-                        if(sallekList == null){
-                          return Center(
-                            child: SizedBox(
-                                height: 300,
-                                child: Center(child: CircularProgressIndicator())),
-                          );
+                      valueListenable: bloc.isLoadingSallek,
+                      builder: (context, loading, child) {
+                        if(loading){
+                          return Center(child: CircularProgressIndicator(),);
                         }
-                      return DataTable(
-                          columns: [
-                            DataColumn(
-                                label: Text(
-                                  "Date",
-                                  style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                        return  ValueListenableBuilder(
+                          valueListenable: bloc.sallekList,
+                          builder: (context, sallekList, child) {
+                            if(sallekList == null){
+                              return Center(
+                                child: SizedBox(
+                                    height: 300,
+                                    child: Center(child: CircularProgressIndicator())),
+                              );
+                            }
+                            return DataTable(
+                              columns: [
+                                DataColumn(
+                                    label: Text(
+                                      "Date",
+                                      style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                                    )),
+                                DataColumn(
+                                    label: Text(
+                                      "Sallek",
+                                      style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                                    )),
+                                DataColumn(
+                                    label: Text(
+                                      "Vehicle No",
+                                      style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                                    )),
+                                // DataColumn(
+                                //     label: Text(
+                                //       "",
+                                //       style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                                //     )),
+                              ],
+                              rows:
+                              sallekList.map((e) => DataRow(cells: [
+                                DataCell(Text(
+                                  e['on_date'].toString(),
+                                  style: GoogleFonts.lato(),
                                 )),
-                            DataColumn(
-                                label: Text(
-                                  "Sallek",
-                                  style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                                DataCell(Text(
+                                  e['sallack_amount'].toString(),
+                                  style: GoogleFonts.lato(),
                                 )),
-                            // DataColumn(
-                            //     label: Text(
-                            //       "",
-                            //       style: GoogleFonts.lato(fontWeight: FontWeight.bold),
-                            //     )),
-                            // DataColumn(
-                            //     label: Text(
-                            //       "",
-                            //       style: GoogleFonts.lato(fontWeight: FontWeight.bold),
-                            //     )),
-                          ],
-                          rows:
-                            sallekList.map((e) => DataRow(cells: [
-                              DataCell(Text(
-                                e['on_date'].toString(),
-                                style: GoogleFonts.lato(),
-                              )),
-                              DataCell(Text(
-                                e['sallack_amount'].toString(),
-                                style: GoogleFonts.lato(),
-                              )),
-                            ])).toList(),
-                          );
-                    },),
+                                DataCell(Text(
+                                  e['vehicle_no'].toString(),
+                                  style: GoogleFonts.lato(),
+                                )),
+                              ])).toList(),
+                            );
+                          },);
+                      },
+
+                    ),
                   )
                 ],
               ),

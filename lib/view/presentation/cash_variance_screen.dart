@@ -78,7 +78,7 @@ class _CashVarianceScreenState extends State<CashVarianceScreen> {
                                         )),
                                     DataColumn(
                                         label: Text(
-                                          "Vehicle_no",
+                                          "Vehicle No",
                                           style: GoogleFonts.lato(fontWeight: FontWeight.bold),
                                         )),
                                   ],
