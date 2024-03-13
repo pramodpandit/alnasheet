@@ -8,17 +8,14 @@ class TrafficFinebloc  extends Bloc{
 
   TrafficFinebloc(this.repo);
 
-  ValueNotifier<bool> isLoadingTrafficFine = ValueNotifier(false);
+  ValueNotifier<List?> trafficFineList = ValueNotifier(null);
 
-  fetchCashVariance()async{
+  getTrafficFineList()async{
     try{
-
-      isLoadingTrafficFine.value = true;
-      var result = repo.cashVariance();
-      print(result);
-      // if(result.status == 1){
-      //
-      // }
+      var result = await repo.fetchTrafficFineList();
+      if(result['success'].toString() == "1"){
+          trafficFineList.value = result['data'];
+      }
     }catch(e,s){
       debugPrint('$e');
       debugPrint('$s');

@@ -1,11 +1,10 @@
+import 'package:alnasheet/bloc/sallek_bloc.dart';
+import 'package:alnasheet/data/repository/sallek_repo.dart';
 import 'package:alnasheet/view/components/go_back.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:alnasheet/view/components/header.dart';
 import 'package:provider/provider.dart';
-
-import '../../bloc/sallek_bloc.dart';
-import '../../data/repository/sallek_repo.dart';
 
 class SallekScreen extends StatefulWidget {
   const SallekScreen({super.key});
@@ -15,6 +14,15 @@ class SallekScreen extends StatefulWidget {
 }
 
 class _SallekScreenState extends State<SallekScreen> {
+  late SallekBloc bloc;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    bloc = SallekBloc(context.read<SallekRepo>());
+    bloc.getSallekList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,85 +42,52 @@ class _SallekScreenState extends State<SallekScreen> {
 
                   Container(
                     width: double.infinity,
-                    child: DataTable(
-                        columns: [
-                          DataColumn(
-                              label: Text(
-                                "Date",
-                                style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                    child: ValueListenableBuilder(
+                      valueListenable: bloc.sallekList,
+                      builder: (context, sallekList, child) {
+                        if(sallekList == null){
+                          return Center(
+                            child: SizedBox(
+                                height: 300,
+                                child: Center(child: CircularProgressIndicator())),
+                          );
+                        }
+                      return DataTable(
+                          columns: [
+                            DataColumn(
+                                label: Text(
+                                  "Date",
+                                  style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                                )),
+                            DataColumn(
+                                label: Text(
+                                  "Sallek",
+                                  style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                                )),
+                            // DataColumn(
+                            //     label: Text(
+                            //       "",
+                            //       style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                            //     )),
+                            // DataColumn(
+                            //     label: Text(
+                            //       "",
+                            //       style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                            //     )),
+                          ],
+                          rows:
+                            sallekList.map((e) => DataRow(cells: [
+                              DataCell(Text(
+                                e['on_date'].toString(),
+                                style: GoogleFonts.lato(),
                               )),
-                          DataColumn(
-                              label: Text(
-                                "Sallek",
-                                style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                              DataCell(Text(
+                                e['sallack_amount'].toString(),
+                                style: GoogleFonts.lato(),
                               )),
-                          DataColumn(
-                              label: Text(
-                                "",
-                                style: GoogleFonts.lato(fontWeight: FontWeight.bold),
-                              )),
-                          DataColumn(
-                              label: Text(
-                                "",
-                                style: GoogleFonts.lato(fontWeight: FontWeight.bold),
-                              )),
-                        ],
-                        rows: [
-                          DataRow(cells: [
-                            DataCell(Text(
-                              "25-04-2023",
-                              style: GoogleFonts.lato(),
-                            )),
-                            DataCell(Text(
-                              "500",
-                              style: GoogleFonts.lato(),
-                            )),
-                            DataCell(Text(
-                              "",
-                              style: GoogleFonts.lato(),
-                            )),
-                            DataCell(Text(
-                              "",
-                              style: GoogleFonts.lato(),
-                            )),
-                          ]),
-                          DataRow(cells: [
-                            DataCell(Text(
-                              "25-04-2023",
-                              style: GoogleFonts.lato(),
-                            )),
-                            DataCell(Text(
-                              "500",
-                              style: GoogleFonts.lato(),
-                            )),
-                            DataCell(Text(
-                              "",
-                              style: GoogleFonts.lato(),
-                            )),
-                            DataCell(Text(
-                              "",
-                              style: GoogleFonts.lato(),
-                            )),
-                          ]),
-                          DataRow(cells: [
-                            DataCell(Text(
-                              "25-04-2023",
-                              style: GoogleFonts.lato(),
-                            )),
-                            DataCell(Text(
-                              "500",
-                              style: GoogleFonts.lato(),
-                            )),
-                            DataCell(Text(
-                              "",
-                              style: GoogleFonts.lato(),
-                            )),
-                            DataCell(Text(
-                              "",
-                              style: GoogleFonts.lato(),
-                            )),
-                          ]),
-                        ]),
+                            ])).toList(),
+                          );
+                    },),
                   )
                 ],
               ),

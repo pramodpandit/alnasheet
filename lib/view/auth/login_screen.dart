@@ -17,7 +17,6 @@ import 'package:provider/provider.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
-
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -165,7 +164,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   SizedBox(height: 25,),
                                   InkWell(
                                     onTap: () {
-
                                       authBloc.login(context);
                                     },
                                     child: Container(

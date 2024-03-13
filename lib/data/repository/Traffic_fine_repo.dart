@@ -10,15 +10,15 @@ class TrafficFineRepo{
   TrafficFineRepo(this.prefs, this._api);
 
 
-  Future<ApiResponse2> cashVariance() async {
+  Future fetchTrafficFineList() async {
     var response = await _api.postRequest("get_traffic_fine_list", {
-      "token":'f9a3e60964a3ffef05050dbeb0e5af2a',
-      "user_id":2,
+      "token": prefs.getString("utoken"),
+      "user_id": prefs.getString("uid"),
     });
 
     if (response == null) {
       ApiException.fromString("response null");
     }
-    return ApiResponse2.fromJson(response,response);
+    return response['result'];
   }
 }

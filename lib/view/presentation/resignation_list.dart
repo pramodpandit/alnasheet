@@ -1,29 +1,28 @@
-import 'package:alnasheet/bloc/traffic_fine_bloc.dart';
-import 'package:alnasheet/data/repository/Traffic_fine_repo.dart';
+import 'package:alnasheet/bloc/sallek_bloc.dart';
+import 'package:alnasheet/data/repository/sallek_repo.dart';
 import 'package:alnasheet/view/components/go_back.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:alnasheet/view/components/header.dart';
 import 'package:provider/provider.dart';
 
-class TrafficFineScreen extends StatefulWidget {
-  const TrafficFineScreen({super.key});
+class ResignationList extends StatefulWidget {
+  const ResignationList({super.key});
 
   @override
-  State<TrafficFineScreen> createState() => _TrafficFineScreenState();
+  State<ResignationList> createState() => _ResignationListState();
 }
 
-class _TrafficFineScreenState extends State<TrafficFineScreen> {
-  late TrafficFinebloc bloc;
+class _ResignationListState extends State<ResignationList> {
+  late SallekBloc bloc;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    bloc = TrafficFinebloc(context.read<TrafficFineRepo>());
-    bloc.getTrafficFineList();
+    bloc = SallekBloc(context.read<SallekRepo>());
+    bloc.getSallekList();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,16 +34,16 @@ class _TrafficFineScreenState extends State<TrafficFineScreen> {
               child:
               Column(
                 children: [
-                  Header(title: "Traffic fine"),
+                  Header(title: "Sallek"),
                   SizedBox(
                     height: 30,
                   ),
                   Container(
                     width: double.infinity,
                     child: ValueListenableBuilder(
-                      valueListenable: bloc.trafficFineList,
-                      builder: (context, trafficFineList, child) {
-                        if(trafficFineList == null){
+                      valueListenable: bloc.sallekList,
+                      builder: (context, sallekList, child) {
+                        if(sallekList == null){
                           return Center(
                             child: SizedBox(
                                 height: 300,
@@ -60,7 +59,7 @@ class _TrafficFineScreenState extends State<TrafficFineScreen> {
                                 )),
                             DataColumn(
                                 label: Text(
-                                  "Fine",
+                                  "Sallek",
                                   style: GoogleFonts.lato(fontWeight: FontWeight.bold),
                                 )),
                             // DataColumn(
@@ -74,23 +73,24 @@ class _TrafficFineScreenState extends State<TrafficFineScreen> {
                             //       style: GoogleFonts.lato(fontWeight: FontWeight.bold),
                             //     )),
                           ],
-                          rows: trafficFineList.map((e) => DataRow(cells: [
+                          rows:
+                            sallekList.map((e) => DataRow(cells: [
                               DataCell(Text(
                                 e['on_date'].toString(),
                                 style: GoogleFonts.lato(),
                               )),
                               DataCell(Text(
-                                e['total_amount'].toString(),
+                                e['sallack_amount'].toString(),
                                 style: GoogleFonts.lato(),
                               )),
-                            ]),).toList()
+                            ])).toList(),
                           );
                     },),
                   )
                 ],
               ),
             ),
-              GoBack(),
+              GoBack()
         ]
           ),
         ),

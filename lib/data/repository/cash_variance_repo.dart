@@ -11,14 +11,20 @@ class CashVariance{
 
 
   Future cashVariance() async {
-    var response = await _api.postRequest("get_cash_variance_list", {
-     "token":prefs.getString('utoken'),
-     "user_id":prefs.getString('uid'),
-    });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try{
+      var response = await _api.postRequest("get_cash_variance_list", {
+       "token": prefs.getString("utoken"),
+       "user_id": prefs.getString("uid"),
+      });
+      print("the res is $response");
 
-    if (response == null) {
-      ApiException.fromString("response null");
+      if (response == null) {
+        ApiException.fromString("response null");
+      }
+      return response;
+    }catch(e){
+      print("the error is $e");
     }
-    return response;
   }
 }
