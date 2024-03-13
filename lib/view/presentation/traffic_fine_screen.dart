@@ -1,10 +1,28 @@
+import 'package:alnasheet/bloc/traffic_fine_bloc.dart';
+import 'package:alnasheet/data/repository/Traffic_fine_repo.dart';
 import 'package:alnasheet/view/components/go_back.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:alnasheet/view/components/header.dart';
+import 'package:provider/provider.dart';
 
-class TrafficFineScreen extends StatelessWidget {
+class TrafficFineScreen extends StatefulWidget {
   const TrafficFineScreen({super.key});
+
+  @override
+  State<TrafficFineScreen> createState() => _TrafficFineScreenState();
+}
+
+class _TrafficFineScreenState extends State<TrafficFineScreen> {
+  late TrafficFinebloc bloc;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    bloc = TrafficFinebloc(context.read<TrafficFineRepo>());
+    bloc.getTrafficFineList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,85 +41,51 @@ class TrafficFineScreen extends StatelessWidget {
                   ),
                   Container(
                     width: double.infinity,
-                    child: DataTable(
-                        columns: [
-                          DataColumn(
-                              label: Text(
-                                "Date",
-                                style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                    child: ValueListenableBuilder(
+                      valueListenable: bloc.trafficFineList,
+                      builder: (context, trafficFineList, child) {
+                        if(trafficFineList == null){
+                          return Center(
+                            child: SizedBox(
+                                height: 300,
+                                child: Center(child: CircularProgressIndicator())),
+                          );
+                        }
+                      return DataTable(
+                          columns: [
+                            DataColumn(
+                                label: Text(
+                                  "Date",
+                                  style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                                )),
+                            DataColumn(
+                                label: Text(
+                                  "Fine",
+                                  style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                                )),
+                            // DataColumn(
+                            //     label: Text(
+                            //       "",
+                            //       style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                            //     )),
+                            // DataColumn(
+                            //     label: Text(
+                            //       "",
+                            //       style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                            //     )),
+                          ],
+                          rows: trafficFineList.map((e) => DataRow(cells: [
+                              DataCell(Text(
+                                e['on_date'].toString(),
+                                style: GoogleFonts.lato(),
                               )),
-                          DataColumn(
-                              label: Text(
-                                "Fine",
-                                style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                              DataCell(Text(
+                                e['total_amount'].toString(),
+                                style: GoogleFonts.lato(),
                               )),
-                          DataColumn(
-                              label: Text(
-                                "",
-                                style: GoogleFonts.lato(fontWeight: FontWeight.bold),
-                              )),
-                          DataColumn(
-                              label: Text(
-                                "",
-                                style: GoogleFonts.lato(fontWeight: FontWeight.bold),
-                              )),
-                        ],
-                        rows: [
-                          DataRow(cells: [
-                            DataCell(Text(
-                              "25-04-2023",
-                              style: GoogleFonts.lato(),
-                            )),
-                            DataCell(Text(
-                              "500",
-                              style: GoogleFonts.lato(),
-                            )),
-                            DataCell(Text(
-                              "",
-                              style: GoogleFonts.lato(),
-                            )),
-                            DataCell(Text(
-                              "",
-                              style: GoogleFonts.lato(),
-                            )),
-                          ]),
-                          DataRow(cells: [
-                            DataCell(Text(
-                              "25-04-2023",
-                              style: GoogleFonts.lato(),
-                            )),
-                            DataCell(Text(
-                              "500",
-                              style: GoogleFonts.lato(),
-                            )),
-                            DataCell(Text(
-                              "",
-                              style: GoogleFonts.lato(),
-                            )),
-                            DataCell(Text(
-                              "",
-                              style: GoogleFonts.lato(),
-                            )),
-                          ]),
-                          DataRow(cells: [
-                            DataCell(Text(
-                              "25-04-2023",
-                              style: GoogleFonts.lato(),
-                            )),
-                            DataCell(Text(
-                              "500",
-                              style: GoogleFonts.lato(),
-                            )),
-                            DataCell(Text(
-                              "",
-                              style: GoogleFonts.lato(),
-                            )),
-                            DataCell(Text(
-                              "",
-                              style: GoogleFonts.lato(),
-                            )),
-                          ]),
-                        ]),
+                            ]),).toList()
+                          );
+                    },),
                   )
                 ],
               ),

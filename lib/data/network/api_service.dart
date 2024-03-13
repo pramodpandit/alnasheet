@@ -10,7 +10,7 @@ class ApiService {
   final Dio dio;
   ApiService(this.dio);
   // static const host = "https://krishnadeep.com/toxmo_electric/";
-  static const host = "http://udyotwork.co.in/fleeting_management_demo/";
+  static const host = "https://al-nasheet.com/fleeting_management/";
 
   static const _baseUrl = "${host}Web/";
 

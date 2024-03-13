@@ -1,3 +1,4 @@
+import 'package:alnasheet/data/network/api_exception.dart';
 import 'package:alnasheet/data/network/api_service.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -17,5 +18,14 @@ class AuthRepository{
       print("the error is $e");
       throw e;
     }
+  }
+
+  Future forgotPasswordApi(Map<String,dynamic> data) async {
+    var response = await api.postRequest("forgot_password", data);
+
+    if (response == null) {
+      ApiException.fromString("response null");
+    }
+    return response['result'];
   }
 }

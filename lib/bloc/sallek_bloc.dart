@@ -10,22 +10,18 @@ class SallekBloc  extends Bloc{
 
   SallekBloc(this.repo);
 
-  ValueNotifier<bool> isLoadingSallek = ValueNotifier(false);
+  ValueNotifier<List?> sallekList = ValueNotifier(null);
 
-  fetchCashVariance()async{
+  getSallekList()async{
     try{
-
-      isLoadingSallek.value = true;
-      var result = repo.cashVariance();
-      print(result);
-      // if(result.status == 1){
-      //
-      // }
+      var result = await repo.fetchSallekList();
+      if(result['success'].toString() == "1"){
+        sallekList.value = result['data'];
+      }
     }catch(e,s){
       debugPrint('$e');
       debugPrint('$s');
     }
   }
-
 
 }

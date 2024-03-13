@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "780798504720",
+    "project_id": "alnasheet-434d9",
+    "storage_bucket": "alnasheet-434d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780798504720:android:44b25d32f990bfa3763f95",
+        "android_client_info": {
+          "package_name": "com.app.alnasheet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhmKVBoYju0XEmeFS6nCCWBJkcm8UDD6c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

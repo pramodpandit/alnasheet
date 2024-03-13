@@ -6,14 +6,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:alnasheet/view/components/header.dart';
 import 'package:provider/provider.dart';
 
-class SallekScreen extends StatefulWidget {
-  const SallekScreen({super.key});
+class ResignationList extends StatefulWidget {
+  const ResignationList({super.key});
 
   @override
-  State<SallekScreen> createState() => _SallekScreenState();
+  State<ResignationList> createState() => _ResignationListState();
 }
 
-class _SallekScreenState extends State<SallekScreen> {
+class _ResignationListState extends State<ResignationList> {
   late SallekBloc bloc;
 
   @override

@@ -1,4 +1,7 @@
+import 'package:alnasheet/view/presentation/excess_fuel_list.dart';
 import 'package:alnasheet/view/presentation/my_account_screen.dart';
+import 'package:alnasheet/view/presentation/other_deduction_list.dart';
+import 'package:alnasheet/view/presentation/resignation_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -214,6 +217,64 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         title: "Sallek",
                                         count: 8,
                                       ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Options(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                child: ExcessFuelList(),
+                                                type: PageTransitionType.rightToLeft,
+                                              ));
+                                        },
+                                        image:
+                                        "assets/images/dash_img_2.png",
+                                        title: "Excess Fuel List",
+                                        count: 10,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Options(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                  child: OtherDeductionList(),
+                                                  type: PageTransitionType.rightToLeft));
+                                        },
+                                        image:
+                                        "assets/images/dash_img_3.png",
+                                        title: "Deduction List",
+                                        count: 8,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Options(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                child: ResignationList(),
+                                                type: PageTransitionType.rightToLeft,
+                                              ));
+                                        },
+                                        image:
+                                        "assets/images/dash_img_1.png",
+                                        title: "Resignation List",
+                                        count: 10,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Offstage(),
                                     ),
                                   ],
                                 ),
