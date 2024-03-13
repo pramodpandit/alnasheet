@@ -112,4 +112,39 @@ class AuthBloc extends Bloc{
     }
   }
 
+  ValueNotifier<bool> changePassLoading = ValueNotifier(false);
+  ValueNotifier<bool> showChangePass = ValueNotifier(true);
+  ValueNotifier<bool> showConfirmChangePass = ValueNotifier(true);
+  TextEditingController changePass = TextEditingController();
+  TextEditingController confirmChangePass = TextEditingController();
+
+  changePassword(BuildContext context)async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String,dynamic> data = {
+      "password" : changePass.text,
+      "confirm_password" : confirmChangePass.text,
+      "token" : prefs.getString("utoken"),
+      "user_id" : prefs.getString("uid"),
+    };
+    if(changePass.text != confirmChangePass.text){
+      toast("password are not same");
+      // return;
+    }else{
+      try{
+        changePassLoading.value = true;
+        var result = await repo.changePasswordApi(data);
+        if(result['result']['success'] == 1){
+          DashboardScreen().launch(context,pageRouteAnimation: PageRouteAnimation.SlideBottomTop,isNewTask: true);
+          toast(result['result']['message']);
+        }else{
+          toast(result['result']['message']);
+        }
+      }catch(e){
+        print("the error $e");
+      }finally{
+        changePassLoading.value = false;
+      }
+    }
+  }
+
 }

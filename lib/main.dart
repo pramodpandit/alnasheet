@@ -1,4 +1,6 @@
 import 'package:alnasheet/data/repository/AuthRepository.dart';
+import 'package:alnasheet/data/repository/excess_fuel_list_repo.dart';
+import 'package:alnasheet/data/repository/resignation_list_repo.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,6 +56,8 @@ class MyApp extends StatelessWidget {
         Provider<MyAttendsRepo>.value(value: MyAttendsRepo(prefs, apiService)),
         Provider<UserInformationRepo>.value(value: UserInformationRepo(prefs, apiService)),
         Provider<SharedPreferences>.value(value: prefs),
+        Provider<ExcessFuelListRepo>.value(value: ExcessFuelListRepo(prefs, apiService)),
+        Provider<ResignationListRepo>.value(value: ResignationListRepo(prefs, apiService)),
       ],
       child: ScreenUtilInit(
           designSize: const Size(375, 812),

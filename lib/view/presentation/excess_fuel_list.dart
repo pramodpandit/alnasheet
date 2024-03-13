@@ -1,4 +1,6 @@
+import 'package:alnasheet/bloc/excess_fuel_list_bloc.dart';
 import 'package:alnasheet/bloc/sallek_bloc.dart';
+import 'package:alnasheet/data/repository/excess_fuel_list_repo.dart';
 import 'package:alnasheet/data/repository/sallek_repo.dart';
 import 'package:alnasheet/view/components/go_back.dart';
 import 'package:flutter/material.dart';
@@ -14,14 +16,14 @@ class ExcessFuelList extends StatefulWidget {
 }
 
 class _ExcessFuelListState extends State<ExcessFuelList> {
-  late SallekBloc bloc;
+  late ExcessFuelListBloc bloc;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    bloc = SallekBloc(context.read<SallekRepo>());
-    bloc.getSallekList();
+    bloc = ExcessFuelListBloc(context.read<ExcessFuelListRepo>());
+    bloc.getExcessFuelList();
   }
   @override
   Widget build(BuildContext context) {
@@ -34,16 +36,16 @@ class _ExcessFuelListState extends State<ExcessFuelList> {
               child:
               Column(
                 children: [
-                  Header(title: "Sallek"),
+                  Header(title: "Excess Fuel List"),
                   SizedBox(
                     height: 30,
                   ),
                   Container(
                     width: double.infinity,
                     child: ValueListenableBuilder(
-                      valueListenable: bloc.sallekList,
-                      builder: (context, sallekList, child) {
-                        if(sallekList == null){
+                      valueListenable: bloc.excessFuelList,
+                      builder: (context, excessFuelList, child) {
+                        if(excessFuelList == null){
                           return Center(
                             child: SizedBox(
                                 height: 300,
@@ -59,28 +61,36 @@ class _ExcessFuelListState extends State<ExcessFuelList> {
                                 )),
                             DataColumn(
                                 label: Text(
-                                  "Sallek",
+                                  "Fuel Price",
                                   style: GoogleFonts.lato(fontWeight: FontWeight.bold),
                                 )),
-                            // DataColumn(
-                            //     label: Text(
-                            //       "",
-                            //       style: GoogleFonts.lato(fontWeight: FontWeight.bold),
-                            //     )),
-                            // DataColumn(
-                            //     label: Text(
-                            //       "",
-                            //       style: GoogleFonts.lato(fontWeight: FontWeight.bold),
-                            //     )),
+                            DataColumn(
+                                label: Text(
+                                  "Qty.",
+                                  style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                                )),
+                            DataColumn(
+                                label: Text(
+                                  "Vehicle no.",
+                                  style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                                )),
                           ],
                           rows:
-                            sallekList.map((e) => DataRow(cells: [
+                          excessFuelList.map((e) => DataRow(cells: [
                               DataCell(Text(
                                 e['on_date'].toString(),
                                 style: GoogleFonts.lato(),
                               )),
                               DataCell(Text(
-                                e['sallack_amount'].toString(),
+                                e['fuel_price'].toString(),
+                                style: GoogleFonts.lato(),
+                              )),
+                              DataCell(Text(
+                                e['fuel_qty'].toString(),
+                                style: GoogleFonts.lato(),
+                              )),
+                              DataCell(Text(
+                                e['vehicle_no'].toString(),
                                 style: GoogleFonts.lato(),
                               )),
                             ])).toList(),

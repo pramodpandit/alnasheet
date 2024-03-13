@@ -35,7 +35,7 @@ class _TrafficFineScreenState extends State<TrafficFineScreen> {
               child:
               Column(
                 children: [
-                  Header(title: "Traffic fine"),
+                  Header(title: "Traffic Fine"),
                   SizedBox(
                     height: 30,
                   ),

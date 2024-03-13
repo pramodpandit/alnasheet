@@ -28,4 +28,15 @@ class AuthRepository{
     }
     return response['result'];
   }
+
+  Future changePasswordApi(Map<String,dynamic> data)async{
+    try{
+      var response = api.postRequest("change_password", data);
+      print("the response is ${response}");
+      return response;
+    }catch(e){
+      print("the error is $e");
+      throw e;
+    }
+  }
 }

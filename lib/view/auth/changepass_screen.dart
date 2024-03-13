@@ -1,10 +1,28 @@
+import 'package:alnasheet/bloc/authBloc.dart';
+import 'package:alnasheet/data/repository/AuthRepository.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:alnasheet/view/auth/forgotpass_screen.dart';
+import 'package:provider/provider.dart';
 
-class ChangePassScreen extends StatelessWidget {
+class ChangePassScreen extends StatefulWidget {
   const ChangePassScreen({super.key});
+
+  @override
+  State<ChangePassScreen> createState() => _ChangePassScreenState();
+}
+
+class _ChangePassScreenState extends State<ChangePassScreen> {
+  late AuthBloc bloc;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    bloc = AuthBloc(context.read<AuthRepository>());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,69 +81,83 @@ class ChangePassScreen extends StatelessWidget {
                           SizedBox(height: 20,),
                           Text("New Password",style: GoogleFonts.nunito(color: Colors.black,fontWeight: FontWeight.bold),),
                           SizedBox(height: 7,),
-                          TextFormField(
-                            cursorColor: Colors.black,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.grey, width: 1),
-                                borderRadius: BorderRadius.circular(5),
+                          ValueListenableBuilder(
+                            valueListenable: bloc.showChangePass,
+                            builder: (context, showChangePass, child) {
+                            return TextFormField(
+                              controller: bloc.changePass,
+                              cursorColor: Colors.black,
+                              obscureText: showChangePass,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
+                                border: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: Colors.grey, width: 1),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: Colors.grey, width: 1),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                prefixIcon: Icon(
+                                  Icons.lock,
+                                  color: Colors.grey,
+                                ),
+                                suffix: InkWell(
+                                  onTap: () {
+                                    bloc.showChangePass.value = !showChangePass;
+                                  },
+                                  child:FaIcon(showChangePass? FontAwesomeIcons.solidEye:FontAwesomeIcons.solidEyeSlash,size: 15,color: Colors.grey,),
+                                ),
+                                hintText: "Password",
+                                hintStyle: GoogleFonts.nunito(color: Colors.grey),
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.grey, width: 1),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              prefixIcon: Icon(
-                                Icons.lock,
-                                color: Colors.grey,
-                              ),
-                              suffix: InkWell(
-                                onTap: () {},
-                                child: Icon(Icons.remove_red_eye),
-                              ),
-                              hintText: "Password",
-                              hintStyle: GoogleFonts.nunito(color: Colors.grey),
-                            ),
-                          ),
+                            );
+                          },),
                           SizedBox(height: 15,),
                           Text("Confirm Password",style: GoogleFonts.nunito(color: Colors.black,fontWeight: FontWeight.bold),),
                           SizedBox(height: 7,),
-                          TextFormField(
-                            cursorColor: Colors.black,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              border: OutlineInputBorder(
-                                borderSide:
-                                BorderSide(color: Colors.grey, width: 1),
-                                borderRadius: BorderRadius.circular(5),
+                          ValueListenableBuilder(
+                            valueListenable: bloc.showConfirmChangePass,
+                            builder: (context, showConfirmChangePass, child) {
+                            return TextFormField(
+                              controller: bloc.confirmChangePass,
+                              cursorColor: Colors.black,
+                              obscureText: showConfirmChangePass,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
+                                border: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: Colors.grey, width: 1),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: Colors.grey, width: 1),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                prefixIcon: Icon(
+                                  Icons.lock,
+                                  color: Colors.grey,
+                                ),
+                                suffix: InkWell(
+                                  onTap: () {
+                                    bloc.showConfirmChangePass.value = !showConfirmChangePass;
+                                  },
+                                  child:FaIcon(showConfirmChangePass? FontAwesomeIcons.solidEye:FontAwesomeIcons.solidEyeSlash,size: 15,color: Colors.grey,),
+                                ),
+                                hintText: "Confirm Password",
+                                hintStyle: GoogleFonts.nunito(color: Colors.grey),
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                BorderSide(color: Colors.grey, width: 1),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              prefixIcon: Icon(
-                                Icons.lock,
-                                color: Colors.grey,
-                              ),
-                              suffix: InkWell(
-                                onTap: () {},
-                                child: Icon(Icons.remove_red_eye),
-                              ),
-                              hintText: "Confirm Password",
-                              hintStyle: GoogleFonts.nunito(color: Colors.grey),
-                            ),
-                          ),
+                            );
+                          },),
                           SizedBox(height: 25,),
                           InkWell(
                             onTap: () {
-                              Navigator.push(context, PageTransition(child: ForgotPassScreen(), type: PageTransitionType.rightToLeft));
+                              bloc.changePassword(context);
                             },
                             child: Container(
                               alignment: Alignment.center,
@@ -134,10 +166,21 @@ class ChangePassScreen extends StatelessWidget {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
                                   color: Color(0xFF222B65)),
-                              child: Text(
-                                "Change Password",
-                                style: GoogleFonts.lato(color: Colors.white,fontWeight: FontWeight.bold),
-                              ),
+                              child: ValueListenableBuilder(
+                                valueListenable: bloc.changePassLoading,
+                                builder: (context, changePassLoading, child) {
+                                  if(changePassLoading){
+                                    return SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(color: Colors.white,strokeWidth: 2,),
+                                    );
+                                  }
+                                  return  Text(
+                                    "Change Password",
+                                    style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+                                  );
+                                },),
                             ),
                           ),
                           SizedBox(height: 20,),

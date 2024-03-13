@@ -1,5 +1,6 @@
+import 'package:alnasheet/view/auth/changepass_screen.dart';
+import 'package:alnasheet/view/auth/login_screen.dart';
 import 'package:alnasheet/view/presentation/excess_fuel_list.dart';
-import 'package:alnasheet/view/presentation/my_account_screen.dart';
 import 'package:alnasheet/view/presentation/other_deduction_list.dart';
 import 'package:alnasheet/view/presentation/resignation_list.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             return ValueListenableBuilder(valueListenable: bloc.informationData,
                 builder: (context, userinformation, child) {
               return Stack(
-                  alignment: Alignment.bottomCenter,
+                  alignment: Alignment.topRight,
                   children:[
                     SingleChildScrollView(
                       child: ConstrainedBox(
@@ -76,37 +77,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          MyAccountScreen().launch(context,pageRouteAnimation: PageRouteAnimation.Slide);
-                                        },
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            CircleAvatar(
-                                              child: Image.network(
-                                                "https://cdn-icons-png.flaticon.com/512/299/299310.png",
-                                                width: 50,
-                                              ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          CircleAvatar(
+                                            child: Image.network(
+                                              "https://cdn-icons-png.flaticon.com/512/299/299310.png",
+                                              width: 50,
                                             ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              "Welcome, ${userinformation['das_first_name'] ??''} ${userinformation['das_last_name']??''}",
-                                              style: GoogleFonts.lato(color: Color(0xFF222B65),fontWeight: FontWeight.bold),
-                                            )
-                                          ],
-                                        ),
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            "Welcome, ${userinformation['das_first_name'] ??''} ${userinformation['das_last_name']??''}",
+                                            style: GoogleFonts.lato(color: Color(0xFF222B65),fontWeight: FontWeight.bold),
+                                          )
+                                        ],
                                       ),
-                                      Container(
-                                        height: 40,
-                                        width: 40,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(1000)),
-                                        child: Icon(Icons.notifications),
-                                      )
+                                      // Container(
+                                      //   height: 40,
+                                      //   width: 40,
+                                      //   decoration: BoxDecoration(
+                                      //       color: Colors.white,
+                                      //       borderRadius: BorderRadius.circular(1000)),
+                                      //   child: Icon(Icons.notifications),
+                                      // )
                                     ],
                                   )
                                 ],
@@ -274,7 +270,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       ),
                                     ),
                                     Expanded(
-                                      child: Offstage(),
+                                      child: Options(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                child: ChangePassScreen(),
+                                                type: PageTransitionType.rightToLeft,
+                                              ));
+                                        },
+                                        image:
+                                        "assets/images/dash_img_1.png",
+                                        title: "Change Password",
+                                        count: 10,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -287,20 +296,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ),
                       ),
                     ),
-                    Container(
-                      color: Colors.white,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // Text("Powered by Aarvy",style: GoogleFonts.nunito(color: Color(0xFFE70A8C),fontWeight: FontWeight.bold),),
-                          Container(
-                            height: 10,
-                            width: double.infinity,
-                            color: Color(0xFF222B65),
-                          ),
-                        ],
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: InkWell(
+                          onTap : () async{
+                            SharedPreferences prefs = await SharedPreferences.getInstance();
+                            await prefs.clear();
+                            LoginScreen().launch(context,isNewTask: true);
+                          },
+                          child: Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle
+                              ),
+                              child: Icon(Icons.logout,color: Colors.black,size: 20,)),
                       ),
-                    )
+                    ),
                   ]
               );
 
@@ -350,13 +363,13 @@ class Options extends StatelessWidget {
                   title,
                   style: GoogleFonts.lato(),
                 ),
-                Text(
-                  count.toString(),
-                  style: GoogleFonts.lato(
-                      color: Color(0xFf8a030a),
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold),
-                ),
+                // Text(
+                //   count.toString(),
+                //   style: GoogleFonts.lato(
+                //       color: Color(0xFf8a030a),
+                //       fontSize: 25,
+                //       fontWeight: FontWeight.bold),
+                // ),
               ]),
         ),
       ),

@@ -1,4 +1,6 @@
+import 'package:alnasheet/bloc/resignation_list_bloc.dart';
 import 'package:alnasheet/bloc/sallek_bloc.dart';
+import 'package:alnasheet/data/repository/resignation_list_repo.dart';
 import 'package:alnasheet/data/repository/sallek_repo.dart';
 import 'package:alnasheet/view/components/go_back.dart';
 import 'package:flutter/material.dart';
@@ -14,14 +16,14 @@ class ResignationList extends StatefulWidget {
 }
 
 class _ResignationListState extends State<ResignationList> {
-  late SallekBloc bloc;
+  late ResignationListBloc bloc;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    bloc = SallekBloc(context.read<SallekRepo>());
-    bloc.getSallekList();
+    bloc = ResignationListBloc(context.read<ResignationListRepo>());
+    bloc.getResignationList();
   }
   @override
   Widget build(BuildContext context) {
@@ -34,16 +36,16 @@ class _ResignationListState extends State<ResignationList> {
               child:
               Column(
                 children: [
-                  Header(title: "Sallek"),
+                  Header(title: "Resignation List"),
                   SizedBox(
                     height: 30,
                   ),
                   Container(
                     width: double.infinity,
                     child: ValueListenableBuilder(
-                      valueListenable: bloc.sallekList,
-                      builder: (context, sallekList, child) {
-                        if(sallekList == null){
+                      valueListenable: bloc.resignationList,
+                      builder: (context, resignationList, child) {
+                        if(resignationList == null){
                           return Center(
                             child: SizedBox(
                                 height: 300,
@@ -59,7 +61,12 @@ class _ResignationListState extends State<ResignationList> {
                                 )),
                             DataColumn(
                                 label: Text(
-                                  "Sallek",
+                                  "Reason",
+                                  style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                                )),
+                            DataColumn(
+                                label: Text(
+                                  "Clearance",
                                   style: GoogleFonts.lato(fontWeight: FontWeight.bold),
                                 )),
                             // DataColumn(
@@ -67,22 +74,21 @@ class _ResignationListState extends State<ResignationList> {
                             //       "",
                             //       style: GoogleFonts.lato(fontWeight: FontWeight.bold),
                             //     )),
-                            // DataColumn(
-                            //     label: Text(
-                            //       "",
-                            //       style: GoogleFonts.lato(fontWeight: FontWeight.bold),
-                            //     )),
                           ],
                           rows:
-                            sallekList.map((e) => DataRow(cells: [
+                          resignationList.map((e) => DataRow(cells: [
                               DataCell(Text(
-                                e['on_date'].toString(),
+                                e['resignation_date'].toString(),
                                 style: GoogleFonts.lato(),
                               )),
                               DataCell(Text(
-                                e['sallack_amount'].toString(),
+                                e['resignation_reason'].toString(),
                                 style: GoogleFonts.lato(),
                               )),
+                            DataCell(Text(
+                              e['clearance_date'].toString(),
+                              style: GoogleFonts.lato(),
+                            )),
                             ])).toList(),
                           );
                     },),
