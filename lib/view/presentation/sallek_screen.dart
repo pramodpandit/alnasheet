@@ -2,9 +2,19 @@ import 'package:alnasheet/view/components/go_back.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:alnasheet/view/components/header.dart';
+import 'package:provider/provider.dart';
 
-class SallekScreen extends StatelessWidget {
+import '../../bloc/sallek_bloc.dart';
+import '../../data/repository/sallek_repo.dart';
+
+class SallekScreen extends StatefulWidget {
   const SallekScreen({super.key});
+
+  @override
+  State<SallekScreen> createState() => _SallekScreenState();
+}
+
+class _SallekScreenState extends State<SallekScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +31,7 @@ class SallekScreen extends StatelessWidget {
                   SizedBox(
                     height: 30,
                   ),
+
                   Container(
                     width: double.infinity,
                     child: DataTable(

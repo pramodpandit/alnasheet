@@ -1,4 +1,4 @@
-package com.example.alnasheet;
+package com.app.alnasheet;
 
 import io.flutter.embedding.android.FlutterActivity;
 
