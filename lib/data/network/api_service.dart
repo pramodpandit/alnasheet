@@ -1,8 +1,7 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import '../../utils/enums.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'api_exception.dart';
 
 
@@ -31,14 +30,14 @@ class ApiService {
         data: withFile ? FormData.fromMap(inputData) : inputData,
         options: option,
       );
-
       if (res.statusCode == 200) {
         var rData = res.data;
         debugPrint('---RESULT: $rData');
         log('---RESULT FULL: $rData');
         debugPrint('---RESULT END');
         return rData;
-      } else {
+      }
+      else {
         throw ApiException.fromString("Error Occurred. ${res.statusCode}");
       }
     } on SocketException {

@@ -11,9 +11,11 @@ class SallekBloc  extends Bloc{
   SallekBloc(this.repo);
 
   ValueNotifier<List?> sallekList = ValueNotifier(null);
+  ValueNotifier<bool> isLoadingSallek = ValueNotifier(false);
 
   getSallekList()async{
     try{
+      isLoadingSallek.value = true;
       var result = await repo.fetchSallekList();
       if(result['success'].toString() == "1"){
         sallekList.value = result['data'];
@@ -21,6 +23,8 @@ class SallekBloc  extends Bloc{
     }catch(e,s){
       debugPrint('$e');
       debugPrint('$s');
+    }finally{
+      isLoadingSallek.value = false;
     }
   }
 

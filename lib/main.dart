@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:alnasheet/view/spalsh_screen.dart';
 import 'data/network/api_service.dart';
 import 'data/network/interceptors.dart';
+import 'data/repository/Deduction_repo.dart';
 import 'data/repository/Traffic_fine_repo.dart';
 import 'data/repository/cash_variance_repo.dart';
 import 'data/repository/missing_shipment_repo.dart';
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
         Provider<VehicleInspectionRepo>.value(value: VehicleInspectionRepo(prefs, apiService)),
         Provider<MyAttendsRepo>.value(value: MyAttendsRepo(prefs, apiService)),
         Provider<UserInformationRepo>.value(value: UserInformationRepo(prefs, apiService)),
+        Provider<DeductionRepo>.value(value: DeductionRepo(prefs, apiService)),
         Provider<SharedPreferences>.value(value: prefs),
       ],
       child: ScreenUtilInit(
