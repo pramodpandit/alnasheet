@@ -12,17 +12,16 @@ class CashVarianceBloc extends Bloc{
   ValueNotifier<bool> isLoadingCashVariance = ValueNotifier(false);
 
   fetchCashVariance()async{
-try{
-
-  isLoadingCashVariance.value = true;
-  var result = repo.cashVariance();
-  print(result);
-  // if(result.status == 1){
-  //
-  // }
-}catch(e,s){
-  debugPrint('$e');
-  debugPrint('$s');
-}
+    try{
+      isLoadingCashVariance.value = true;
+      var result = repo.cashVariance();
+      print(result);
+      // if(result.status == 1){
+      //
+      // }
+    }catch(e,s){
+      debugPrint('$e');
+      debugPrint('$s');
+    }
   }
 }

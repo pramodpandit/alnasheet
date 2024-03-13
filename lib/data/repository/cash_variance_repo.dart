@@ -10,15 +10,21 @@ class CashVariance{
   CashVariance(this.prefs, this._api);
 
 
-  Future<ApiResponse2> cashVariance() async {
-    var response = await _api.postRequest("get_cash_variance_list", {
-     "token":'f9a3e60964a3ffef05050dbeb0e5af2a',
-     "user_id":2,
-    });
+  Future cashVariance() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try{
+      var response = await _api.postRequest("get_cash_variance_list", {
+       "token": prefs.getString("utoken"),
+       "user_id": prefs.getString("uid"),
+      });
+      print("the res is $response");
 
-    if (response == null) {
-      ApiException.fromString("response null");
+      if (response == null) {
+        ApiException.fromString("response null");
+      }
+      return response;
+    }catch(e){
+      print("the error is $e");
     }
-    return ApiResponse2.fromJson(response,response);
   }
 }

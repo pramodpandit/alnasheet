@@ -1,3 +1,4 @@
+import 'package:alnasheet/Utils/message_handler.dart';
 import 'package:alnasheet/bloc/bloc.dart';
 import 'package:alnasheet/data/model/api_response.dart';
 import 'package:alnasheet/data/repository/AuthRepository.dart';
@@ -24,10 +25,12 @@ class AuthBloc extends Bloc{
     };
     try{
       var result = await repo.loginToDashboard(data);
-      prefs.setString("uid", result['result']['data']['id']);
-      prefs.setString("utoken", result['result']['data']['token']);
       if(result['result']['success'] == 1){
+        prefs.setString("uid", result['result']['data']['id']);
+        prefs.setString("utoken", result['result']['data']['token']);
         DashboardScreen().launch(context,pageRouteAnimation: PageRouteAnimation.SlideBottomTop,isNewTask: true);
+      }else{
+        toast(result['result']['message']);
       }
     }catch(e){
       print("the error $e");
