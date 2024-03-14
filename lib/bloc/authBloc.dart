@@ -135,18 +135,17 @@ class AuthBloc extends Bloc{
     }else if( confirmChangePass.text ==''){
       showMessage(MessageType.info('Please enter confirm password'));
       return;
-    }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String,dynamic> data = {
-      "password" : changePass.text,
-      "confirm_password" : confirmChangePass.text,
-      "token" : prefs.getString("utoken"),
-      "user_id" : prefs.getString("uid"),
-    };
-    if(changePass.text != confirmChangePass.text){
-      toast("password are not same");
-      // return;
+    }else if(changePass.text != confirmChangePass.text){
+      showMessage(MessageType.info('Password are not same'));
     }else{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      Map<String,dynamic> data = {
+        "password" : changePass.text,
+        "confirm_password" : confirmChangePass.text,
+        "token" : prefs.getString("utoken"),
+        "user_id" : prefs.getString("uid"),
+      };
+
       try{
         changePassLoading.value = true;
         var result = await repo.changePasswordApi(data);
@@ -162,6 +161,7 @@ class AuthBloc extends Bloc{
         changePassLoading.value = false;
       }
     }
-  }
+    }
+
 
 }

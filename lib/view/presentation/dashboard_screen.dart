@@ -280,7 +280,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                               ));
                                         },
                                         image:
-                                        "assets/images/dash_img_1.png",
+                                        "assets/images/image1.png",
                                         title: "Change Password",
                                         count: 10,
                                       ),
