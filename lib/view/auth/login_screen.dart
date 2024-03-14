@@ -14,6 +14,8 @@ import 'package:alnasheet/view/auth/forgotpass_screen.dart';
 import 'package:alnasheet/view/presentation/dashboard_screen.dart';
 import 'package:provider/provider.dart';
 
+import '../../Utils/message_handler.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -29,6 +31,9 @@ class _LoginScreenState extends State<LoginScreen> {
     // TODO: implement initState
     super.initState();
     authBloc =AuthBloc(context.read<AuthRepository>());
+    authBloc.msgController?.stream.listen((event) {
+      AppMessageHandler().showSnackBar(context, event);
+    });
   }
   @override
   Widget build(BuildContext context) {

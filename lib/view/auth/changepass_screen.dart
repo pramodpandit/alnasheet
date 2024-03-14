@@ -7,6 +7,8 @@ import 'package:page_transition/page_transition.dart';
 import 'package:alnasheet/view/auth/forgotpass_screen.dart';
 import 'package:provider/provider.dart';
 
+import '../../Utils/message_handler.dart';
+
 class ChangePassScreen extends StatefulWidget {
   const ChangePassScreen({super.key});
 
@@ -22,6 +24,9 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
     // TODO: implement initState
     super.initState();
     bloc = AuthBloc(context.read<AuthRepository>());
+    bloc.msgController?.stream.listen((event) {
+      AppMessageHandler().showSnackBar(context, event);
+    });
   }
 
   @override

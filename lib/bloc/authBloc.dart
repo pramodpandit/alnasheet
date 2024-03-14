@@ -17,28 +17,35 @@ class AuthBloc extends Bloc{
   TextEditingController password = TextEditingController();
 
   login(BuildContext context)async{
-    loginLoading.value = true;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String,dynamic> data = {
-      "username" : username.text,
-      "password" : password.text,
-      "gcm_id" : "1234555",
-    };
-    try{
-      var result = await repo.loginToDashboard(data);
-      if(result['result']['success'] == 1){
-        prefs.setString("uid", result['result']['data']['id']);
-        prefs.setString("utoken", result['result']['data']['token']);
-        DashboardScreen().launch(context,pageRouteAnimation: PageRouteAnimation.SlideBottomTop,isNewTask: true);
-        toast(result['result']['message']);
-      }else{
-        toast(result['result']['message']);
+    if(username.text == ''){
+      showMessage(MessageType.info('Please enter username'));
+    }else if( password.text ==''){
+      showMessage(MessageType.info('Please enter password'));
+    }else{
+      loginLoading.value = true;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      Map<String,dynamic> data = {
+        "username" : username.text,
+        "password" : password.text,
+        "gcm_id" : "1234555",
+      };
+      try{
+        var result = await repo.loginToDashboard(data);
+        if(result['result']['success'] == 1){
+          prefs.setString("uid", result['result']['data']['id']);
+          prefs.setString("utoken", result['result']['data']['token']);
+          DashboardScreen().launch(context,pageRouteAnimation: PageRouteAnimation.SlideBottomTop,isNewTask: true);
+          toast(result['result']['message']);
+        }else{
+          toast(result['result']['message']);
+        }
+      }catch(e){
+        print("the error $e");
+      }finally{
+        loginLoading.value = false;
       }
-    }catch(e){
-      print("the error $e");
-    }finally{
-      loginLoading.value = false;
     }
+
   }
 
   ValueNotifier<bool> forgotPasswordLoading = ValueNotifier(false);
@@ -46,6 +53,10 @@ class AuthBloc extends Bloc{
   ValueNotifier<String> newPassword = ValueNotifier("");
 
   forgotPassword(BuildContext context)async{
+    if(forgotPasswordUsername.text == ''){
+      showMessage(MessageType.info('Please enter username'));
+      return ;
+    }
     forgotPasswordLoading.value = true;
     Map<String,dynamic> data = {
       "username" : forgotPasswordUsername.text,
@@ -119,6 +130,12 @@ class AuthBloc extends Bloc{
   TextEditingController confirmChangePass = TextEditingController();
 
   changePassword(BuildContext context)async{
+    if(changePass.text == ''){
+      showMessage(MessageType.info('Please enter new password'));
+    }else if( confirmChangePass.text ==''){
+      showMessage(MessageType.info('Please enter confirm password'));
+      return;
+    }
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String,dynamic> data = {
       "password" : changePass.text,
