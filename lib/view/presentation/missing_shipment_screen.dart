@@ -23,7 +23,7 @@ class _MissingShipmentScreenState extends State<MissingShipmentScreen> {
     // TODO: implement initState
     super.initState();
     bloc = MissingShipmentbloc(context.read<MissingShipmentRepo>());
-    bloc.fetchMissingShipment();
+    bloc.fetchMissingShipment(context);
   }
   @override
   Widget build(BuildContext context) {
@@ -74,8 +74,8 @@ class _MissingShipmentScreenState extends State<MissingShipmentScreen> {
                                           )),
                                       DataColumn(
                                           label: Text(
-                                            "Name",
-                                            style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                                            "   Name",
+                                            style: GoogleFonts.lato(fontWeight: FontWeight.bold),textAlign: TextAlign.center,
                                           )),
                                       DataColumn(
                                           label: Text(

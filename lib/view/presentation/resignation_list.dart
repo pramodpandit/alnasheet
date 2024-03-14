@@ -23,7 +23,7 @@ class _ResignationListState extends State<ResignationList> {
     // TODO: implement initState
     super.initState();
     bloc = ResignationListBloc(context.read<ResignationListRepo>());
-    bloc.getResignationList();
+    bloc.getResignationList(context);
   }
   @override
   Widget build(BuildContext context) {
@@ -81,9 +81,11 @@ class _ResignationListState extends State<ResignationList> {
                                 e['resignation_date'].toString(),
                                 style: GoogleFonts.lato(),
                               )),
-                              DataCell(Text(
-                                e['resignation_reason'].toString(),
-                                style: GoogleFonts.lato(),
+                              DataCell(Center(
+                                child: Text(
+                                  e['resignation_reason'].toString(),
+                                  style: GoogleFonts.lato(),
+                                ),
                               )),
                             DataCell(Text(
                               e['clearance_date'].toString(),

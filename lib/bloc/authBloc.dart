@@ -12,7 +12,7 @@ class AuthBloc extends Bloc{
   AuthBloc(this.repo);
 
   ValueNotifier<bool> loginLoading = ValueNotifier(false);
-  ValueNotifier<bool> securePassword = ValueNotifier(false);
+  ValueNotifier<bool> securePassword = ValueNotifier(true);
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
 

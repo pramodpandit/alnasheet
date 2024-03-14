@@ -34,7 +34,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // TODO: implement initState
     super.initState();
     bloc= UserInformationBloc(context.read<UserInformationRepo>());
-    bloc.UserInformation();
+    bloc.UserInformation(context);
   }
   @override
   Widget build(BuildContext context) {

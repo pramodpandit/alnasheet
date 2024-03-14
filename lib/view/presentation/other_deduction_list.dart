@@ -24,7 +24,7 @@ class _OtherDeductionListState extends State<OtherDeductionList> {
     // TODO: implement initState
     super.initState();
     bloc = DeductionBloc(context.read<DeductionRepo>());
-    bloc.fetchdeductionVariance();
+    bloc.fetchdeductionVariance(context);
   }
   @override
   Widget build(BuildContext context) {

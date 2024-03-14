@@ -21,7 +21,7 @@ class _TrafficFineScreenState extends State<TrafficFineScreen> {
     // TODO: implement initState
     super.initState();
     bloc = TrafficFinebloc(context.read<TrafficFineRepo>());
-    bloc.getTrafficFineList();
+    bloc.getTrafficFineList(context);
   }
 
   @override

@@ -23,7 +23,7 @@ class _ExcessFuelListState extends State<ExcessFuelList> {
     // TODO: implement initState
     super.initState();
     bloc = ExcessFuelListBloc(context.read<ExcessFuelListRepo>());
-    bloc.getExcessFuelList();
+    bloc.getExcessFuelList(context);
   }
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class _ExcessFuelListState extends State<ExcessFuelList> {
                           );
                         }
                       return DataTable(
-                        columnSpacing: 5,
+                        columnSpacing: 10,
 
                           columns: [
                             DataColumn(

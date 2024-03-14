@@ -23,7 +23,7 @@ class _CashVarianceScreenState extends State<CashVarianceScreen> {
     // TODO: implement initState
     super.initState();
     bloc = CashVarianceBloc(context.read<CashVariance>());
-    bloc.fetchCashVariance();
+    bloc.fetchCashVariance(context);
   }
   @override
   Widget build(BuildContext context) {

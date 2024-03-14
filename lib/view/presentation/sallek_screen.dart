@@ -21,7 +21,7 @@ class _SallekScreenState extends State<SallekScreen> {
     // TODO: implement initState
     super.initState();
     bloc = SallekBloc(context.read<SallekRepo>());
-    bloc.getSallekList();
+    bloc.getSallekList(context);
   }
 
   @override

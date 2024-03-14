@@ -1,6 +1,4 @@
 import 'package:nb_utils/nb_utils.dart';
-
-import '../model/api_response.dart';
 import '../network/api_exception.dart';
 import '../network/api_service.dart';
 
@@ -15,7 +13,7 @@ class SallekRepo{
       "token": prefs.getString("utoken"),
       "user_id": prefs.getString("uid"),
     });
-
+    print('data toke${response}');
     if (response == null) {
       ApiException.fromString("response null");
     }
