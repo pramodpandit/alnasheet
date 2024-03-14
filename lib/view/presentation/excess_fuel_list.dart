@@ -53,6 +53,8 @@ class _ExcessFuelListState extends State<ExcessFuelList> {
                           );
                         }
                       return DataTable(
+                        columnSpacing: 5,
+
                           columns: [
                             DataColumn(
                                 label: Text(
@@ -81,13 +83,17 @@ class _ExcessFuelListState extends State<ExcessFuelList> {
                                 e['on_date'].toString(),
                                 style: GoogleFonts.lato(),
                               )),
-                              DataCell(Text(
-                                e['fuel_price'].toString(),
-                                style: GoogleFonts.lato(),
+                              DataCell(Center(
+                                child: Text(
+                                  e['fuel_price'].toString(),
+                                  style: GoogleFonts.lato(),
+                                ),
                               )),
-                              DataCell(Text(
-                                e['fuel_qty'].toString(),
-                                style: GoogleFonts.lato(),
+                              DataCell(Center(
+                                child: Text(
+                                  e['fuel_qty'].toString(),
+                                  style: GoogleFonts.lato(),
+                                ),
                               )),
                               DataCell(Text(
                                 e['vehicle_no'].toString(),
