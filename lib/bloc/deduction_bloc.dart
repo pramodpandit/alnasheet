@@ -19,7 +19,7 @@ class DeductionBloc extends Bloc{
     SharedPreferences pref = await SharedPreferences.getInstance();
     try {
       isLoadingCashVariance.value = true;
-      var result = await repo.deductionData();
+      var result = await repo.deductionData(context,);
       print('user date:$result');
       if (result['result']['success'] == 1) {
         deduction.value = result['result']['data'];
@@ -27,9 +27,11 @@ class DeductionBloc extends Bloc{
         showMessage(MessageType.error('Something went wrong'));
       }
     } catch (e, s) {
-      toast('Session Expired');
-      LoginScreen().launch(context,isNewTask: true,pageRouteAnimation: PageRouteAnimation.Fade);
-      pref.clear();
+      if(e.toString() =='Token has been expired'){
+        toast('Session Expired');
+        LoginScreen().launch(context,isNewTask: true,pageRouteAnimation: PageRouteAnimation.Fade);
+        pref.clear();
+      }
       debugPrint('token print$e');
       debugPrint('token resonse print$s');
       debugPrint('$e');

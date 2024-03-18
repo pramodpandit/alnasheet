@@ -30,7 +30,7 @@ class AuthBloc extends Bloc{
         "gcm_id" : "1234555",
       };
       try{
-        var result = await repo.loginToDashboard(data);
+        var result = await repo.loginToDashboard(context,data);
         if(result['result']['success'] == 1){
           prefs.setString("uid", result['result']['data']['id']);
           prefs.setString("utoken", result['result']['data']['token']);
@@ -62,7 +62,7 @@ class AuthBloc extends Bloc{
       "username" : forgotPasswordUsername.text,
     };
     try{
-      var result = await repo.forgotPasswordApi(data);
+      var result = await repo.forgotPasswordApi(context,data);
       if(result['success'].toString() == "1"){
         newPassword.value = result['message'];
         showInDialog(context,
@@ -135,21 +135,20 @@ class AuthBloc extends Bloc{
     }else if( confirmChangePass.text ==''){
       showMessage(MessageType.info('Please enter confirm password'));
       return;
-    }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String,dynamic> data = {
-      "password" : changePass.text,
-      "confirm_password" : confirmChangePass.text,
-      "token" : prefs.getString("utoken"),
-      "user_id" : prefs.getString("uid"),
-    };
-    if(changePass.text != confirmChangePass.text){
-      toast("password are not same");
-      // return;
+    }else if(changePass.text != confirmChangePass.text){
+      showMessage(MessageType.info('Password are not same'));
     }else{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      Map<String,dynamic> data = {
+        "password" : changePass.text,
+        "confirm_password" : confirmChangePass.text,
+        "token" : prefs.getString("utoken"),
+        "user_id" : prefs.getString("uid"),
+      };
+
       try{
         changePassLoading.value = true;
-        var result = await repo.changePasswordApi(data);
+        var result = await repo.changePasswordApi(context,data);
         if(result['result']['success'] == 1){
           DashboardScreen().launch(context,pageRouteAnimation: PageRouteAnimation.SlideBottomTop,isNewTask: true);
           toast(result['result']['message']);
@@ -162,6 +161,7 @@ class AuthBloc extends Bloc{
         changePassLoading.value = false;
       }
     }
-  }
+    }
+
 
 }

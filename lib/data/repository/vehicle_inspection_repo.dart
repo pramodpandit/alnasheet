@@ -10,8 +10,8 @@ class VehicleInspectionRepo{
   VehicleInspectionRepo(this.prefs, this._api);
 
 
-  Future<ApiResponse2> cashVariance() async {
-    var response = await _api.postRequest("get_missing_shipment_list", {
+  Future<ApiResponse2> cashVariance(context) async {
+    var response = await _api.postRequest(context,"get_missing_shipment_list", {
       "token":'f9a3e60964a3ffef05050dbeb0e5af2a',
       "user_id":2,
     });

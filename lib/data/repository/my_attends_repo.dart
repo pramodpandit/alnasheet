@@ -1,3 +1,6 @@
+
+import 'package:alnasheet/view/auth/login_screen.dart';
+import 'package:http/http.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../model/api_response.dart';
@@ -10,15 +13,42 @@ class MyAttendsRepo{
   MyAttendsRepo(this.prefs, this._api);
 
 
-  Future<ApiResponse2> cashVariance() async {
-    var response = await _api.postRequest("get_missing_shipment_list", {
-      "token":'f9a3e60964a3ffef05050dbeb0e5af2a',
-      "user_id":2,
+  Future fetchattendsList(context, month, year) async {
+    var response = await _api.postRequest(context, "get_attendance_list", {
+      "token": prefs.getString("utoken"),
+      "user_id": prefs.getString("uid"),
+      "month":month,
+      "year":year
     });
 
     if (response == null) {
       ApiException.fromString("response null");
     }
-    return ApiResponse2.fromJson(response,response);
+    return response;
+  }
+  Future attensdispute(context, date, remark) async {
+    var response = await _api.postRequest(context,"raise_attendance_dispute", {
+      "token": prefs.getString("utoken"),
+      "user_id": prefs.getString("uid"),
+      "attendance_date":date,
+      "dispute_remark":remark
+    });
+
+    if (response == null) {
+      ApiException.fromString("response null");
+    }
+    return response;
+  }
+  Future attendsAgree(context, date,String value) async {
+    var response = await _api.postRequest(context,"set_attendance_agreed", {
+      "token": prefs.getString("utoken"),
+      "user_id": prefs.getString("uid"),
+      "attendance_date":date,
+      "is_agree":value
+    });
+    if (response == null) {
+      ApiException.fromString("response null");
+    }
+    return response;
   }
 }

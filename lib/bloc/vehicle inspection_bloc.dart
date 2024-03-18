@@ -20,15 +20,17 @@ class VehicleInspectionBloc  extends Bloc{
     try{
 
       isLoadingVehicleInspection.value = true;
-      var result = repo.cashVariance();
+      var result = repo.cashVariance(context,);
       print(result);
       // if(result.status == 1){
       //
       // }
     }catch(e,s){
-      toast('Session Expired');
-      LoginScreen().launch(context,isNewTask: true,pageRouteAnimation: PageRouteAnimation.Fade);
-      pref.clear();
+      if(e.toString() =='Token has been expired'){
+        toast('Session Expired');
+        LoginScreen().launch(context,isNewTask: true,pageRouteAnimation: PageRouteAnimation.Fade);
+        pref.clear();
+      }
       debugPrint('token print$e');
       debugPrint('token resonse print$s');
       debugPrint('$e');

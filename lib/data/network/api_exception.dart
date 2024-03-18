@@ -23,6 +23,7 @@ class ApiException implements Exception {
       case DioErrorType.sendTimeout:
         message = "Send timeout in connection with API server";
         break;
+
       default:
         message = "Something went wrong";
         break;
@@ -38,10 +39,12 @@ class ApiException implements Exception {
     switch (statusCode) {
       case 400:
         return 'Bad request';
-      case 404:
+        case 404:
         return 'The requested resource was not found';
       case 500:
         return 'Internal server error';
+      case 401:
+        return 'Token has been expired';
       default:
         return 'Something went wrong on server';
     }

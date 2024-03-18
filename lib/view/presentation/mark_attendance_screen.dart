@@ -4,16 +4,33 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:alnasheet/view/components/header.dart';
 
-class MarkAttendanceScreen extends StatelessWidget {
+import '../../bloc/my_attends_bloc.dart';
+import '../../data/repository/my_attends_repo.dart';
+
+class MarkAttendanceScreen extends StatefulWidget {
   const MarkAttendanceScreen({super.key});
 
+  @override
+  State<MarkAttendanceScreen> createState() => _MarkAttendanceScreenState();
+}
+
+class _MarkAttendanceScreenState extends State<MarkAttendanceScreen> {
+  late MyAttendsBloc bloc;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    bloc = MyAttendsBloc(context.read<MyAttendsRepo>());
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Stack(
-            children:[ SizedBox(
+            children:[
+              SizedBox(
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [
@@ -35,7 +52,7 @@ class MarkAttendanceScreen extends StatelessWidget {
                         SizedBox(height: 50,),
                         InkWell(
                           onTap: () {
-
+                            bloc.acceptAttend(context, '1');
                           },
                           child: Container(
                             width: double.infinity,
@@ -52,7 +69,7 @@ class MarkAttendanceScreen extends StatelessWidget {
                           onTap: () {
                             showDialog(
                               context: context, builder: (context) {
-                              return AttendanceModal();
+                              return AttendanceModal(bloc: bloc,);
                             },);
                           },
                           child: Container(
@@ -82,7 +99,8 @@ class MarkAttendanceScreen extends StatelessWidget {
 }
 
 class AttendanceModal extends StatelessWidget {
-  const AttendanceModal({super.key});
+  final MyAttendsBloc bloc;
+  const AttendanceModal({super.key, required this.bloc});
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +125,7 @@ class AttendanceModal extends StatelessWidget {
                       Container(
                         color: Colors.white,
                         child: TextFormField(
+                          controller: bloc.disputeText,
                           cursorColor: Colors.grey,
                           maxLines: 7,
                           decoration: InputDecoration(
@@ -125,7 +144,7 @@ class AttendanceModal extends StatelessWidget {
                       SizedBox(height: 10,),
                       InkWell(
                         onTap: () {
-
+                          bloc.acceptdispute(context, );
                         },
                         child: Container(
                           width: double.infinity,

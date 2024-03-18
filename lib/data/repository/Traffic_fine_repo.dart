@@ -10,8 +10,8 @@ class TrafficFineRepo{
   TrafficFineRepo(this.prefs, this._api);
 
 
-  Future fetchTrafficFineList() async {
-    var response = await _api.postRequest("get_traffic_fine_list", {
+  Future fetchTrafficFineList(context) async {
+    var response = await _api.postRequest(context,"get_traffic_fine_list", {
       "token": prefs.getString("utoken"),
       "user_id": prefs.getString("uid"),
     });

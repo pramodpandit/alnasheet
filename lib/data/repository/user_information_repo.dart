@@ -10,9 +10,9 @@ class UserInformationRepo{
   UserInformationRepo(this.prefs, this._api);
 
 
-  Future information() async {
+  Future information(context) async {
     try {
-      var response = await _api.postRequest("get_user_info", {
+      var response = await _api.postRequest(context,"get_user_info", {
         "user_id": prefs.getString('uid'),
       });
       return response;

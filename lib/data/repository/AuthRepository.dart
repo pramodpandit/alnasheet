@@ -9,9 +9,9 @@ class AuthRepository{
   ApiService api;
   AuthRepository(this.pref,this.api);
 
-  Future loginToDashboard(Map<String,dynamic> data)async{
+  Future loginToDashboard(context,Map<String,dynamic> data)async{
     try{
-      var response = api.postRequest("login", data);
+      var response = api.postRequest(context,"login", data);
       print("the response is ${response}");
       return response;
     }catch(e){
@@ -20,8 +20,8 @@ class AuthRepository{
     }
   }
 
-  Future forgotPasswordApi(Map<String,dynamic> data) async {
-    var response = await api.postRequest("forgot_password", data);
+  Future forgotPasswordApi(context,Map<String,dynamic> data) async {
+    var response = await api.postRequest(context,"forgot_password", data);
 
     if (response == null) {
       ApiException.fromString("response null");
@@ -29,9 +29,9 @@ class AuthRepository{
     return response['result'];
   }
 
-  Future changePasswordApi(Map<String,dynamic> data)async{
+  Future changePasswordApi(context,Map<String,dynamic> data)async{
     try{
-      var response = api.postRequest("change_password", data);
+      var response = api.postRequest(context,"change_password", data);
       print("the response is ${response}");
       return response;
     }catch(e){

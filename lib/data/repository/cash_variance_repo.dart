@@ -10,10 +10,10 @@ class CashVariance{
   CashVariance(this.prefs, this._api);
 
 
-  Future cashVariance() async {
+  Future cashVariance(context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try{
-      var response = await _api.postRequest("get_cash_variance_list", {
+      var response = await _api.postRequest(context,"get_cash_variance_list", {
        "token": prefs.getString("utoken"),
        "user_id": prefs.getString("uid"),
       });
