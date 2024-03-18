@@ -10,9 +10,9 @@ class DeductionRepo{
   DeductionRepo(this.prefs, this._api);
 
 
-  Future deductionData() async {
+  Future deductionData(context) async {
 
-    var response = await _api.postRequest("get_other_deduction_list", {
+    var response = await _api.postRequest(context,"get_other_deduction_list", {
       "token":prefs.getString('utoken'),
       "user_id":prefs.getString('uid'),
     });

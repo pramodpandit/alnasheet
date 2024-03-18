@@ -8,8 +8,8 @@ class SallekRepo{
   SallekRepo(this.prefs, this._api);
 
 
-  Future fetchSallekList() async {
-    var response = await _api.postRequest("get_sallack_list", {
+  Future fetchSallekList(context) async {
+    var response = await _api.postRequest(context,"get_sallack_list", {
       "token": prefs.getString("utoken"),
       "user_id": prefs.getString("uid"),
     });

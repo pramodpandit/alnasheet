@@ -10,8 +10,8 @@ class ExcessFuelListRepo{
   ExcessFuelListRepo(this.prefs, this._api);
 
 
-  Future fetchExcessFuelList() async {
-    var response = await _api.postRequest("get_excess_fuel_list", {
+  Future fetchExcessFuelList(context) async {
+    var response = await _api.postRequest(context,"get_excess_fuel_list", {
       "token": prefs.getString("utoken"),
       "user_id": prefs.getString("uid"),
     });

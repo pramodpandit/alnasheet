@@ -10,8 +10,8 @@ class MissingShipmentRepo{
   MissingShipmentRepo(this.prefs, this._api);
 
 
-  Future missingShipment() async {
-    var response = await _api.postRequest("get_missing_shipment_list", {
+  Future missingShipment(context) async {
+    var response = await _api.postRequest(context,"get_missing_shipment_list", {
       "token":prefs.getString('utoken'),
       "user_id":prefs.getString('uid'),
     });

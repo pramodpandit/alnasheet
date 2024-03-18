@@ -18,14 +18,16 @@ class ExcessFuelListBloc extends Bloc{
   getExcessFuelList(BuildContext context)async{
     SharedPreferences pref = await SharedPreferences.getInstance();
     try{
-      var result = await repo.fetchExcessFuelList();
+      var result = await repo.fetchExcessFuelList(context,);
       if(result['success'].toString() == "1"){
         excessFuelList.value = result['data'];
       }
     }catch(e,s){
-      toast('Session Expired');
-      LoginScreen().launch(context,isNewTask: true,pageRouteAnimation: PageRouteAnimation.Fade);
-      pref.clear();
+      if(e.toString() =='Token has been expired'){
+        toast('Session Expired');
+        LoginScreen().launch(context,isNewTask: true,pageRouteAnimation: PageRouteAnimation.Fade);
+        pref.clear();
+      }
       debugPrint('token print$e');
       debugPrint('token resonse print$s');
       debugPrint('$e');

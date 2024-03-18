@@ -10,8 +10,8 @@ class ResignationListRepo{
   ResignationListRepo(this.prefs, this._api);
 
 
-  Future fetchResignationList() async {
-    var response = await _api.postRequest("get_da_resignation_list", {
+  Future fetchResignationList(context) async {
+    var response = await _api.postRequest(context,"get_da_resignation_list", {
       "token": prefs.getString("utoken"),
       "user_id": prefs.getString("uid"),
     });

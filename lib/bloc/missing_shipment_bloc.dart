@@ -19,7 +19,7 @@ class MissingShipmentbloc  extends Bloc{
     SharedPreferences pref = await SharedPreferences.getInstance();
     try{
       isLoadingMissingStatement.value = true;
-      var result = await repo.missingShipment();
+      var result = await repo.missingShipment(context);
       print('user date:$result');
       if(result['result']['success'].toString()=='1'){
         MissingStatement.value = result['result']['data'];
@@ -28,12 +28,15 @@ class MissingShipmentbloc  extends Bloc{
         showMessage(MessageType.error('Something went wrong'));
       }
     }catch(e,s){
-      toast('Session Expired');
-      LoginScreen().launch(context,isNewTask: true,pageRouteAnimation: PageRouteAnimation.Fade);
-      pref.clear();
+
       debugPrint('token print$e');
       debugPrint('token resonse print$s');
       debugPrint('$e');
+      if(e.toString() =='Token has been expired'){
+        toast('Session Expired');
+        LoginScreen().launch(context,isNewTask: true,pageRouteAnimation: PageRouteAnimation.Fade);
+        pref.clear();
+      }
       debugPrint('$s');
     }
     finally{

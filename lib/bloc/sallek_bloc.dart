@@ -19,16 +19,18 @@ class SallekBloc  extends Bloc{
     SharedPreferences pref = await SharedPreferences.getInstance();
     try{
       isLoadingSallek.value = true;
-      var result = await repo.fetchSallekList();
+      var result = await repo.fetchSallekList(context);
       if(result['success'].toString() == "1"){
         sallekList.value = result['data'];
       }else{
         print('token destroye :$result');
       }
     }catch(e,s){
-      toast('Session Expired');
-      LoginScreen().launch(context,isNewTask: true,pageRouteAnimation: PageRouteAnimation.Fade);
-      pref.clear();
+      if(e.toString() =='Token has been expired'){
+        toast('Session Expired');
+        LoginScreen().launch(context,isNewTask: true,pageRouteAnimation: PageRouteAnimation.Fade);
+        pref.clear();
+      }
       debugPrint('token print$e');
       debugPrint('token resonse print$s');
     }finally{
