@@ -51,13 +51,11 @@ class MyAttendsBloc  extends Bloc{
     }
   }
 
-
-  acceptAttend(BuildContext context, String value)async{
+   acceptAttend(BuildContext context, String value)async{
     SharedPreferences pref = await SharedPreferences.getInstance();
-
     try{
       isLoadingAtteds.value = true;
-      var result = await repo.attendsAgree(context,'${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',value );
+      var result = await repo.attendsAgree(context,'',value );
       if(result['result']['success'].toString()=='1'){
         toast('Punched in success');
       }else{
@@ -78,7 +76,6 @@ class MyAttendsBloc  extends Bloc{
       isLoadingAtteds.value = false;
     }
   }
-
   TextEditingController disputeText = TextEditingController();
   acceptdispute(BuildContext context, )async{
     SharedPreferences pref = await SharedPreferences.getInstance();

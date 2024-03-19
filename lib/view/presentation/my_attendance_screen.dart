@@ -128,11 +128,7 @@ class _MyAttendanceScreenState extends State<MyAttendanceScreen> {
                                               ),
                                               TextButton(
                                                 onPressed: () {
-                                                  Navigator.pop(
-                                                      context,
-                                                      monthDate?.month ??
-                                                          DateTime.now()
-                                                              .month);
+                                                  Navigator.pop(context, monthDate?.month ?? DateTime.now().month);
                                                 },
                                                 child: Text('Select'),
                                               ),

@@ -15,7 +15,6 @@ class ApiService {
   static const _baseUrl = "${host}Web/";
 
   dynamic postRequest(context,String subUrl, Map<String, dynamic> inputData, {bool withFile = false, cacheRequest = true, bool forceRefresh = false}) async {
-
     try {
       String url = "$_baseUrl$subUrl";
       debugPrint('---POST1 url $url');

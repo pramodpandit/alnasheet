@@ -28,8 +28,8 @@ class MyAttendsRepo{
   }
   Future attensdispute(context, date, remark) async {
     var response = await _api.postRequest(context,"raise_attendance_dispute", {
-      "token": prefs.getString("utoken"),
-      "user_id": prefs.getString("uid"),
+      "token": prefs.getString("utoken").toString(),
+      "user_id": prefs.getString("uid").toString(),
       "attendance_date":date,
       "dispute_remark":remark
     });
@@ -41,8 +41,8 @@ class MyAttendsRepo{
   }
   Future attendsAgree(context, date,String value) async {
     var response = await _api.postRequest(context,"set_attendance_agreed", {
-      "token": prefs.getString("utoken"),
-      "user_id": prefs.getString("uid"),
+      "token": prefs.getString("utoken").toString(),
+      "user_id": prefs.getString("uid").toString(),
       "attendance_date":date,
       "is_agree":value
     });
