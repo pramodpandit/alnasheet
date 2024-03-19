@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:alnasheet/view/components/header.dart';
@@ -145,7 +146,7 @@ class _MyAttendanceScreenState extends State<MyAttendanceScreen> {
                                       }
                                     },
                                     child: Container(
-                                      height: 50,
+                                      height: 40,
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 20),
                                       decoration: BoxDecoration(
@@ -202,11 +203,12 @@ class _MyAttendanceScreenState extends State<MyAttendanceScreen> {
                                               content: DropdownButton<int>(
                                                 value: date?.year ??
                                                     DateTime.now().year,
-                                                items: List.generate(30,
+                                                items: List.generate(
+                                                    int.parse(DateFormat("yy").format(DateTime.now()))-23,
                                                         (index) {
-                                                      return DropdownMenuItem<int>(value: DateTime.now().year -15 +
+                                                      return DropdownMenuItem<int>(value: DateTime.now().year +
                                                           index,
-                                                        child: Text((DateTime.now().year - 15 + index).toString()),
+                                                        child: Text((DateTime.now().year + index).toString()),
                                                       );
                                                     }),
                                                 onChanged: (int? value) {
@@ -239,7 +241,7 @@ class _MyAttendanceScreenState extends State<MyAttendanceScreen> {
                                       },
 
                                       child: Container(
-                                        height: 50,
+                                        height: 40,
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 20),
                                         decoration: BoxDecoration(
@@ -271,197 +273,281 @@ class _MyAttendanceScreenState extends State<MyAttendanceScreen> {
                           ),
                         ],
                       ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //   children: [
-                      //     InkWell(
-                      //       onTap: () async{
-                      //         // await showDatePicker(
-                      //         //   context: context,
-                      //         //   initialDate: DateTime.now(),
-                      //         //   firstDate: DateTime(1900),
-                      //         //   lastDate: DateTime(3000),
-                      //         // ).then((value){
-                      //         //   myAttendanceScreenProvider.setDate(value.toString().split(" ")[0]);
-                      //         // });
-                      //       },
-                      //       child: Container(
-                      //         padding: const EdgeInsets.all(5),
-                      //         decoration: BoxDecoration(
-                      //             borderRadius: BorderRadius.circular(5),
-                      //             border: Border.all(color: Colors.grey, width: 1)),
-                      //         child: Row(
-                      //           mainAxisSize: MainAxisSize.min,
-                      //           children: [
-                      //             const Icon(Icons.calendar_month),
-                      //             const SizedBox(width: 10),
-                      //         Text("3/43/343",style: GoogleFonts.lato(),),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     Text("To",style: GoogleFonts.nunito(fontSize: 17),),
-                      //     InkWell(
-                      //       onTap: () async{
-                      //         // await showDatePicker(
-                      //         //   context: context,
-                      //         //   initialDate: DateTime.now(),
-                      //         //   firstDate: DateTime(1900),
-                      //         //   lastDate: DateTime(3000),
-                      //         // ).then((value){
-                      //         //   myAttendanceScreenProvider.setDate(value.toString().split(" ")[0]);
-                      //         // });
-                      //       },
-                      //       child: Container(
-                      //         padding: const EdgeInsets.all(5),
-                      //         decoration: BoxDecoration(
-                      //             borderRadius: BorderRadius.circular(5),
-                      //             border: Border.all(color: Colors.grey, width: 1)),
-                      //         child: Row(
-                      //           mainAxisSize: MainAxisSize.min,
-                      //           children: [
-                      //             const Icon(Icons.calendar_month),
-                      //             const SizedBox(width: 10),
-                      //         Text("43/43/4544",style: GoogleFonts.lato(),),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
                       const SizedBox(height: 20,),
-                      Row(
-                        children: [
-                          const SizedBox(width: 10,),
-                          Expanded(
-                            child: AttendanceStatus(
-                              onTap: () {
-                                Navigator.push(context, PageTransition(child: const MarkAttendanceScreen(), type: PageTransitionType.rightToLeft));
-                              },
-                                color: Colors.green, title: "Present", count: 24),
-                          ),
-                          const SizedBox(width: 12,),
-                          Expanded(
-                            child: AttendanceStatus(
-                              onTap: () {
-
-                              },
-                                color: const Color(0xFf8a030a),
-                                title: "Absent",
-                                count: 01),
-                          ),
-                          const SizedBox(width: 10,),
-                        ],
-                      ),
-                      const SizedBox(height: 12,),
-                      Row(
-                        children: [
-                          const SizedBox(width: 10,),
-                          Expanded(
-                            child: AttendanceStatus(
-                                onTap: () {
-
-                                },
-                                color: const Color(0xFFe3de84),
-                                title: "Half Duty",
-                                count: 01),
-                          ),
-                          const SizedBox(width: 12,),
-                          Expanded(
-                            child: AttendanceStatus(
-                                onTap: () {
-                                  Navigator.push(context, PageTransition(child: const MarkAttendanceScreen(), type: PageTransitionType.rightToLeft));
-                                },
-                                color: Colors.green, title: "Full Duty", count: 24),
-                          ),
-                          const SizedBox(width: 10,),
-                        ],
-                      ),
-                      const SizedBox(height: 12,),
-                      Row(
-                        children: [
-                          const SizedBox(width: 10,),
-                          Expanded(
-                            child: AttendanceStatus(
-                                onTap: () {
-
-                                },
-                                color: const Color(0xFf8a030a),
-                                title: "Double Duty",
-                                count: 01),
-                          ),
-                          const SizedBox(width: 12,),
-                          Expanded(
-                            child: AttendanceStatus(
-                                onTap: () {
-
-                                },
-                                color: const Color(0xFFe3de84),
-                                title: "Amazon Support",
-                                count: 01),
-                          ),
-                          const SizedBox(width: 10,),
-                        ],
-                      ),
-                      const SizedBox(height: 12,),
-                      Row(
-                        children: [
-                          const SizedBox(width: 10,),
-                          Expanded(
-                            child: AttendanceStatus(
-                                onTap: () {
-                                  Navigator.push(context, PageTransition(child: const MarkAttendanceScreen(), type: PageTransitionType.rightToLeft));
-                                },
-                                color: Colors.green, title: "Internal Support", count: 24),
-                          ),
-                          const SizedBox(width: 12,),
-                          Expanded(child: Container()),
-                          const SizedBox(width: 10,),
-                        ],
-                      ),
-                      const SizedBox(height: 30,),
                       ValueListenableBuilder(
                         valueListenable: bloc.isLoadingAtteds,
                         builder: (context, isLoading, child) {
-                          if(isLoading){
-                            return Center(child: CircularProgressIndicator());
-                          }
-                          return ValueListenableBuilder(
-                            valueListenable: bloc.AttendsList,
-                            builder: (context, attendsList, child) {
+                        if(isLoading){
+                          return Center(child: CircularProgressIndicator());
+                        }
+                        return ValueListenableBuilder(
+                          valueListenable: bloc.AttendsList,
+                          builder: (context, attendsList, child) {
 
-                              if(attendsList ==null){
-                                return Center(child: CircularProgressIndicator());
-                              }else if(attendsList ==''){
-                                return Text('Data does not exist!');
-                              }
-                              else{
-                                List attensListData = (attendsList['attendance_details']as List).reversed.toList();
-                                return  ListView.builder(
+                            if(attendsList ==null){
+                              return Center(child: CircularProgressIndicator());
+                            }
+                            if(attendsList =='') {
+                              return Text('Data does not exist!');
+                            }
+                          List attensListData = (attendsList['attendance_details']as List).reversed.toList();
+                            double fullDayCount = 0.0;
+                            attensListData.forEach((element) {
+                              fullDayCount += element['total_full_route'];
+                            });
+                            double halfDayCount = 0.0;
+                            attensListData.forEach((element) {
+                              halfDayCount += element['total_half_route'];
+                            });
+
+                          return Column(
+                            children: [
+                              Row(
+                                children: [
+                                  const SizedBox(width: 10,),
+                                  Expanded(
+                                    child: AttendanceStatus(
+                                        onTap: () {
+                                        //  Navigator.push(context, PageTransition(child: const MarkAttendanceScreen(), type: PageTransitionType.rightToLeft));
+                                        },
+                                        color: Colors.green, title: "Present", count: 24),
+                                  ),
+                                  const SizedBox(width: 12,),
+                                  Expanded(
+                                    child: AttendanceStatus(
+                                        onTap: () {
+
+                                        },
+                                        color: const Color(0xFf8a030a),
+                                        title: "Absent",
+                                        count: 01),
+                                  ),
+                                  const SizedBox(width: 10,),
+                                ],
+                              ),
+                              const SizedBox(height: 12,),
+                              Row(
+                                children: [
+                                  const SizedBox(width: 10,),
+                                  Expanded(
+                                    child: AttendanceStatus(
+                                        onTap: () {
+
+                                        },
+                                        color: const Color(0xFFe3de84),
+                                        title: "Half Duty",
+                                        count: int.parse(halfDayCount.toString().splitBefore(".")),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12,),
+                                  Expanded(
+                                    child: AttendanceStatus(
+                                        onTap: () {
+                                          //Navigator.push(context, PageTransition(child: const MarkAttendanceScreen(), type: PageTransitionType.rightToLeft));
+                                        },
+                                        color: Colors.green, title: "Full Duty", count: int.parse(fullDayCount.toString().splitBefore("."))),
+                                  ),
+                                  const SizedBox(width: 10,),
+                                ],
+                              ),
+                              const SizedBox(height: 12,),
+                              Row(
+                                children: [
+                                  const SizedBox(width: 10,),
+                                  Expanded(
+                                    child: AttendanceStatus(
+                                        onTap: () {
+
+                                        },
+                                        color: const Color(0xFf8a030a),
+                                        title: "Double Duty",
+                                        count: 01),
+                                  ),
+                                  const SizedBox(width: 12,),
+                                  Expanded(
+                                    child: AttendanceStatus(
+                                        onTap: () {
+
+                                        },
+                                        color: const Color(0xFFe3de84),
+                                        title: "Amazon Support",
+                                        count: 01),
+                                  ),
+                                  const SizedBox(width: 10,),
+                                ],
+                              ),
+                              const SizedBox(height: 12,),
+                              Row(
+                                children: [
+                                  const SizedBox(width: 10,),
+                                  Expanded(
+                                    child: AttendanceStatus(
+                                        onTap: () {
+                                         // Navigator.push(context, PageTransition(child: const MarkAttendanceScreen(), type: PageTransitionType.rightToLeft));
+                                        },
+                                        color: Colors.green, title: "Internal Support", count: 24),
+                                  ),
+                                  const SizedBox(width: 12,),
+                                  Expanded(child: Container()),
+                                  const SizedBox(width: 10,),
+                                ],
+                              ),
+                              const SizedBox(height: 30,),
+                              ListView.builder(
                                   physics: NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
-                                    itemCount: attensListData.length,
-                                    itemBuilder: (context,index){
-                                      var data = attensListData[index];
-                                  return Padding(
-                                    padding: EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 20),
-                                    child:  LastAttendance(
-                                      day: DateFormat('EEEE').format(DateTime.parse(data['on_date'])),
-                                      date: DateFormat("dd-MM-yyyy").format(DateTime.parse(data['on_date'])),
-                                      status: data['is_agree'].toString() == '1'?"Present":'Absent',
-                                      statusType: "Amazon Support",
-                                      amount: data['total_full_payment'],
-                                    ),
-                                  );
-                                });
-                              }
-                            },
-
+                                  itemCount: attensListData.length,
+                                  itemBuilder: (context,index){
+                                    var data = attensListData[index];
+                                    return Padding(
+                                      padding: EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 20),
+                                      child:  Column(
+                                        children: [
+                                          Column(children: [
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(DateFormat('EEEE').format(DateTime.parse(data['on_date'])),
+                                                  style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.bold,
+                                                    color: const Color(0xFF222B65),
+                                                  ),
+                                                ),
+                                                Text(DateFormat("dd-MM-yyyy").format(DateTime.parse(data['on_date'])),
+                                                    style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.bold,
+                                                      color: const Color(0xFF222B65),
+                                                    )),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            Container(
+                                              height: 2,
+                                              color: const Color(0xFF222B65),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                          ]),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text("Full Duty (${data['total_full_route'].toString()})",
+                                                style: GoogleFonts.lato(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.pink,
+                                                ),
+                                              ),
+                                              Text(data['total_full_payment'].toString(),
+                                                style: GoogleFonts.lato(fontWeight: FontWeight.bold,
+                                                  color: Colors.green,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text("Half Duty (${data['total_half_route'].toString()})",
+                                                style: GoogleFonts.lato(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.pink,
+                                                ),
+                                              ),
+                                              Text(data['total_half_payment'].toString(),
+                                                style: GoogleFonts.lato(fontWeight: FontWeight.bold,
+                                                  color: Colors.green,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          10.height,
+                                          data['is_agree'].toString() == "0" ?
+                                              DateTime.parse(data['on_date'].toString()).day < DateTime.now().day-2?
+                                                  Offstage()
+                                          : Row(
+                                            children: [
+                                              Expanded(
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    bloc.acceptAttend(context, data['on_date']);
+                                                  },
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(5),
+                                                        color: Colors.green.shade600
+                                                    ),
+                                                    child: Center(child: Text("Agree",style: GoogleFonts.lato(color: Colors.white,fontSize: 13),)),
+                                                  ),
+                                                ),
+                                              ),
+                                              10.width,
+                                              Expanded(
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    showInDialog(
+                                                      dialogAnimation: DialogAnimation.SLIDE_TOP_BOTTOM,
+                                                      context,
+                                                      builder: (context) {
+                                                        return AttendanceModal(bloc: bloc,date: data['on_date']);
+                                                      },);
+                                                  },
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(5),
+                                                      color: Colors.yellow.shade800,
+                                                    ),
+                                                    child: Center(child: Text("Raise a Dispute",style: GoogleFonts.lato(color: Colors.white,fontSize: 13),)),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                              : data['is_agree'].toString() == "2" ?
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: Offstage(),
+                                              ),
+                                              10.width,
+                                              Expanded(
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    showInDialog(
+                                                      dialogAnimation: DialogAnimation.SLIDE_TOP_BOTTOM,
+                                                      context,
+                                                      builder: (context) {
+                                                        return EditDispute(bloc: bloc,date: data['on_date'],remark : data['dispute_remark'].toString());
+                                                      },);
+                                                  },
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(5),
+                                                      color: Colors.yellow.shade800,
+                                                    ),
+                                                    child: Center(child: Text("Edit Dispute",style: GoogleFonts.lato(color: Colors.white,fontSize: 13),)),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                              : Offstage()
+                                        ],
+                                      ),
+                                    );
+                                  })
+                            ],
                           );
-
-                        },
-
-                      )
+                        },);
+                      },),
                     ],
                   )
                 ],
@@ -530,87 +616,3 @@ class AttendanceStatus extends StatelessWidget {
   }
 }
 
-class LastAttendance extends StatelessWidget {
-  final String day;
-  final String date;
-  final String status;
-  final String statusType;
-  final int amount;
-  const LastAttendance(
-      {super.key,
-      required this.day,
-      required this.date,
-        required this.status,
-        required this.statusType,
-        required this.amount,
-      });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-        day
-            ,
-            style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.bold,
-            color: const Color(0xFF222B65),
-            ),
-          ),
-          Text(date,
-              style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.bold,
-                color: const Color(0xFF222B65),
-              )),
-        ],
-      ),
-      const SizedBox(
-        height: 5,
-      ),
-      Container(
-        height: 2,
-        color: const Color(0xFF222B65),
-      ),
-      const SizedBox(
-        height: 10,
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(status,
-            style: GoogleFonts.lato(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: status=="Present"?Colors.green:Colors.red.shade900,
-            ),
-          ),
-          Text(status=="Present"?"Rs. $amount":"",
-            style: GoogleFonts.lato(fontWeight: FontWeight.bold,
-                color: status=="Present"?Colors.green:Colors.red,
-            ),
-          )
-        ],
-      ),
-      statusType!=""?const SizedBox(height: 5,):Container(),
-      statusType!=""?
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(statusType,
-            style: GoogleFonts.lato(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: Colors.pink,
-            ),
-          ),
-          Text(statusType!=""?"Rs. $amount":"",
-            style: GoogleFonts.lato(fontWeight: FontWeight.bold,
-              color: Colors.pink
-            ),
-          )
-        ],
-      ):Container(),
-      const SizedBox(height: 10,),
-    ]);
-  }
-}

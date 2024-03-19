@@ -95,14 +95,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           )
                                         ],
                                       ),
-                                      Container(
-                                        height: 40,
-                                        width: 40,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(1000)),
-                                        child: Icon(Icons.notifications),
-                                      )
+                                      // Container(
+                                      //   height: 40,
+                                      //   width: 40,
+                                      //   decoration: BoxDecoration(
+                                      //       color: Colors.white,
+                                      //       borderRadius: BorderRadius.circular(1000)),
+                                      //   child: Icon(Icons.notifications),
+                                      // )
                                     ],
                                   )
                                 ],

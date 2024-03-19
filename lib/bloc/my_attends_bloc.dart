@@ -17,15 +17,15 @@ class MyAttendsBloc  extends Bloc{
 
   ValueNotifier<bool> isLoadingAtteds= ValueNotifier(false);
   ValueNotifier AttendsList = ValueNotifier(null);
-  ValueNotifier<DateTime?> month = ValueNotifier(DateTime.now());
-  ValueNotifier<DateTime?> year = ValueNotifier(DateTime.now());
+  ValueNotifier<DateTime> month = ValueNotifier(DateTime.now());
+  ValueNotifier<DateTime> year = ValueNotifier(DateTime.now());
   updateMonth(DateTime value) => month.value = value;
   updateYear(DateTime value) => year.value = value;
 
   fetchAttendance(BuildContext context)async{
     SharedPreferences pref = await SharedPreferences.getInstance();
-    String months = DateFormat('MM').format(month.value!);
-    String years = DateFormat('yyyy').format(year.value!);
+    String months = month.value.isToday == DateTime.now().isToday?0.toString(): DateFormat('MM').format(month.value);
+    String years =year.value.isToday == DateTime.now().isToday?0.toString(): DateFormat('yyyy').format(year.value);
     try{
       isLoadingAtteds.value = true;
       var result = await repo.fetchattendsList(context,months,years);
@@ -51,12 +51,17 @@ class MyAttendsBloc  extends Bloc{
     }
   }
 
-   acceptAttend(BuildContext context, String value)async{
+
+
+  acceptAttend(BuildContext context,String date)async{
     SharedPreferences pref = await SharedPreferences.getInstance();
     try{
       isLoadingAtteds.value = true;
-      var result = await repo.attendsAgree(context,'',value );
+      var result = await repo.attendsAgree(context,date);
+
       if(result['result']['success'].toString()=='1'){
+        AttendsList.value = null;
+        fetchAttendance(context);
         toast('Punched in success');
       }else{
         showMessage(MessageType.error('Something went wrong'));
@@ -77,14 +82,17 @@ class MyAttendsBloc  extends Bloc{
     }
   }
   TextEditingController disputeText = TextEditingController();
-  acceptdispute(BuildContext context, )async{
+  acceptdispute(BuildContext context, String date)async{
     SharedPreferences pref = await SharedPreferences.getInstance();
 
     try{
       isLoadingAtteds.value = true;
-      var result = await repo.attensdispute(context,'${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',disputeText.text );
+      var result = await repo.attensdispute(context,date,disputeText.text );
       if(result['result']['success'].toString()=='1'){
-        toast('Punched in success');
+        toast('Dispute raised');
+        Navigator.of(context).pop();
+        AttendsList.value = null;
+        fetchAttendance(context);
       }else{
         showMessage(MessageType.error('Something went wrong'));
       }

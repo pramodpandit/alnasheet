@@ -1,6 +1,7 @@
 import 'package:alnasheet/view/components/go_back.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:alnasheet/view/components/header.dart';
 
@@ -69,7 +70,7 @@ class _MarkAttendanceScreenState extends State<MarkAttendanceScreen> {
                           onTap: () {
                             showDialog(
                               context: context, builder: (context) {
-                              return AttendanceModal(bloc: bloc,);
+                              return AttendanceModal(bloc: bloc,date: "ty",);
                             },);
                           },
                           child: Container(
@@ -98,76 +99,147 @@ class _MarkAttendanceScreenState extends State<MarkAttendanceScreen> {
   }
 }
 
-class AttendanceModal extends StatelessWidget {
+class AttendanceModal extends StatefulWidget {
   final MyAttendsBloc bloc;
-  const AttendanceModal({super.key, required this.bloc});
+  final String date;
+  const AttendanceModal({super.key, required this.bloc, required this.date});
 
   @override
+  State<AttendanceModal> createState() => _AttendanceModalState();
+}
+
+class _AttendanceModalState extends State<AttendanceModal> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    widget.bloc.disputeText.text = "";
+  }
+  @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10),
-            child: Container(
-              height: 300,
-              decoration: BoxDecoration(
-                color: Color(0xFFD8D8D8),
-                borderRadius: BorderRadius.circular(5)
-              ),
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    // mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        color: Colors.white,
-                        child: TextFormField(
-                          controller: bloc.disputeText,
-                          cursorColor: Colors.grey,
-                          maxLines: 7,
-                          decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey,width: 1)
-                          ),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey,width: 1),
-                                borderRadius: BorderRadius.circular(5)
-                              ),
-                          hintText: "Write Something",
-                            hintStyle: GoogleFonts.lato(fontSize: 15)
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-                      InkWell(
-                        onTap: () {
-                          bloc.acceptdispute(context, );
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              gradient: LinearGradient(colors: [Color(0xFF1C2340),Color(0xFF222B65)],begin: Alignment.topCenter,end: Alignment.bottomCenter)
-                          ),
-                          child: Center(child: Text("Submit",style: GoogleFonts.lato(color: Colors.white,fontSize: 16),)),
-                        ),
-                      ),
-                    ],
-                  ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: Colors.grey,width: 1),
+            borderRadius: BorderRadius.circular(5)
+          ),
+          child: Text(widget.date),
+        ),
+        10.height,
+        Container(
+          color: Colors.white,
+          child: TextFormField(
+            controller: widget.bloc.disputeText,
+            cursorColor: Colors.grey,
+            maxLines: 7,
+            decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey,width: 1)
+            ),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey,width: 1),
+                  borderRadius: BorderRadius.circular(5)
                 ),
-              ),
+            hintText: "Write Dispute...",
+              hintStyle: GoogleFonts.lato(fontSize: 15)
             ),
           ),
         ),
+        SizedBox(height: 10,),
+        InkWell(
+          onTap: () {
+            widget.bloc.acceptdispute(context,widget.date);
+          },
+          child: Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                gradient: LinearGradient(colors: [Color(0xFF1C2340),Color(0xFF222B65)],begin: Alignment.topCenter,end: Alignment.bottomCenter)
+            ),
+            child: Center(child: Text("Submit",style: GoogleFonts.lato(color: Colors.white,fontSize: 16),)),
+          ),
+        ),
+      ],
     );
   }
 }
-//
-// decoration: BoxDecoration(
-// color: Color(0xFFD8D8D8),
-// borderRadius: BorderRadius.circular(5)
-// ),
+
+
+class EditDispute extends StatefulWidget {
+  final MyAttendsBloc bloc;
+  final String date;
+  final String remark;
+  const EditDispute({super.key, required this.bloc, required this.date, required this.remark});
+
+  @override
+  State<EditDispute> createState() => _EditDisputeState();
+}
+
+class _EditDisputeState extends State<EditDispute> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    widget.bloc.disputeText.text = widget.remark;
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.grey,width: 1),
+              borderRadius: BorderRadius.circular(5)
+          ),
+          child: Text(widget.date),
+        ),
+        10.height,
+        Container(
+          color: Colors.white,
+          child: TextFormField(
+            textCapitalization: TextCapitalization.sentences,
+            controller: widget.bloc.disputeText,
+            cursorColor: Colors.grey,
+            maxLines: 7,
+            decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey,width: 1)
+                ),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey,width: 1),
+                    borderRadius: BorderRadius.circular(5)
+                ),
+                hintText: "Write Dispute...",
+                hintStyle: GoogleFonts.lato(fontSize: 15)
+            ),
+          ),
+        ),
+        SizedBox(height: 10,),
+        InkWell(
+          onTap: () {
+            widget.bloc.acceptdispute(context,widget.date);
+          },
+          child: Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                gradient: LinearGradient(colors: [Color(0xFF1C2340),Color(0xFF222B65)],begin: Alignment.topCenter,end: Alignment.bottomCenter)
+            ),
+            child: Center(child: Text("Submit",style: GoogleFonts.lato(color: Colors.white,fontSize: 16),)),
+          ),
+        ),
+      ],
+    );
+  }
+}

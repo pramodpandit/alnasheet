@@ -26,7 +26,7 @@ class MyAttendsRepo{
     }
     return response;
   }
-  Future attensdispute(context, date, remark) async {
+  Future attensdispute(context, date,String remark) async {
     var response = await _api.postRequest(context,"raise_attendance_dispute", {
       "token": prefs.getString("utoken").toString(),
       "user_id": prefs.getString("uid").toString(),
@@ -39,12 +39,13 @@ class MyAttendsRepo{
     }
     return response;
   }
-  Future attendsAgree(context, date,String value) async {
+  Future attendsAgree(context,String date) async {
     var response = await _api.postRequest(context,"set_attendance_agreed", {
-      "token": prefs.getString("utoken").toString(),
-      "user_id": prefs.getString("uid").toString(),
-      "attendance_date":date,
-      "is_agree":value
+
+      "token": prefs.getString("utoken"),
+      "user_id": prefs.getString("uid"),
+      "attendance_date": date,
+      "is_agree": "1"
     });
     if (response == null) {
       ApiException.fromString("response null");
