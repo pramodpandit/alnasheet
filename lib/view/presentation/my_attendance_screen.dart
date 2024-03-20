@@ -46,30 +46,6 @@ class _MyAttendanceScreenState extends State<MyAttendanceScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                        color: const Color(0xFFededed),
-                        borderRadius: BorderRadius.circular(1000)),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.zero,
-                        border: const OutlineInputBorder(
-                            borderSide: BorderSide.none),
-                        focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide.none),
-                        hintText: "Search",
-                        hintStyle: GoogleFonts.nunito(),
-                        prefixIcon: const Icon(
-                          Icons.search,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
                   Column(
                     children: [
                       Row(
@@ -278,17 +254,38 @@ class _MyAttendanceScreenState extends State<MyAttendanceScreen> {
                         valueListenable: bloc.isLoadingAtteds,
                         builder: (context, isLoading, child) {
                         if(isLoading){
-                          return Center(child: CircularProgressIndicator());
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(height: 100),
+                              CircularProgressIndicator(),
+                            ],
+                          );
                         }
                         return ValueListenableBuilder(
                           valueListenable: bloc.AttendsList,
                           builder: (context, attendsList, child) {
 
                             if(attendsList ==null){
-                              return Center(child: CircularProgressIndicator());
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(height: 100),
+                                  CircularProgressIndicator(),
+                                ],
+                              );
                             }
                             if(attendsList =='') {
-                              return Text('Data does not exist!');
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(height: 100),
+                                  Text('Data does not exist'),
+                                ],
+                              );
                             }
                           List attensListData = (attendsList['attendance_details']as List).reversed.toList();
                             double fullDayCount = 0.0;
@@ -412,7 +409,7 @@ class _MyAttendanceScreenState extends State<MyAttendanceScreen> {
                                                     color: const Color(0xFF222B65),
                                                   ),
                                                 ),
-                                                Text(DateFormat("dd-MM-yyyy").format(DateTime.parse(data['on_date'])),
+                                                Text(DateFormat("yyyy-MM-dd").format(DateTime.parse(data['on_date'])),
                                                     style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.bold,
                                                       color: const Color(0xFF222B65),
                                                     )),
@@ -588,24 +585,16 @@ class AttendanceStatus extends StatelessWidget {
             Row(
               children: [
                 const SizedBox(
-                  width: 5,
-                ),
-                Container(
-                  height: double.infinity,
-                  width: 3,
-                  decoration: BoxDecoration(color: color),
-                ),
-                const SizedBox(
-                  width: 3,
+                  width: 8,
                 ),
                 Text(title,style: GoogleFonts.lato(),),
               ],
             ),
             Row(
               children: [
-                Text("$count",style: GoogleFonts.lato(),),
+                Text(count<10?"0$count":"$count",style: GoogleFonts.lato(),),
                 const SizedBox(
-                  width: 5,
+                  width: 8,
                 ),
               ],
             ),

@@ -12,13 +12,13 @@ class DeductionBloc extends Bloc{
   DeductionBloc(this.repo);
 
 
-  ValueNotifier<bool> isLoadingCashVariance = ValueNotifier(false);
+  ValueNotifier<bool> isLoadingDeduction = ValueNotifier(false);
   ValueNotifier<List?> deduction = ValueNotifier([]);
 
   fetchdeductionVariance(BuildContext context)async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     try {
-      isLoadingCashVariance.value = true;
+      isLoadingDeduction.value = true;
       var result = await repo.deductionData(context,);
       print('user date:$result');
       if (result['result']['success'] == 1) {
@@ -38,7 +38,7 @@ class DeductionBloc extends Bloc{
       debugPrint('$s');
     }
     finally {
-      isLoadingCashVariance.value = false;
+      isLoadingDeduction.value = false;
     }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:alnasheet/view/components/go_back.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:alnasheet/view/components/header.dart';
@@ -128,7 +129,7 @@ class _AttendanceModalState extends State<AttendanceModal> {
             border: Border.all(color: Colors.grey,width: 1),
             borderRadius: BorderRadius.circular(5)
           ),
-          child: Text(widget.date),
+          child: Text(DateFormat("yyyy-MM-dd").format(DateTime.parse(widget.date))),
         ),
         10.height,
         Container(

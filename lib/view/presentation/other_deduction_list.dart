@@ -5,6 +5,7 @@ import 'package:alnasheet/view/components/go_back.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:alnasheet/view/components/header.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/repository/Deduction_repo.dart';
@@ -44,18 +45,33 @@ class _OtherDeductionListState extends State<OtherDeductionList> {
                   Container(
                     width: double.infinity,
                     child: ValueListenableBuilder(
-                      valueListenable: bloc.deduction,
-                      builder: (context, sallekList, child) {
-                        if(sallekList == null){
-                          return Center(
-                            child: SizedBox(
-                                height: 300,
-                                child: Center(child: CircularProgressIndicator())),
+                      valueListenable: bloc.isLoadingDeduction,
+                      builder: (context, isLoadingDeduction, child) {
+                        if(isLoadingDeduction){
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(height: 100),
+                              CircularProgressIndicator(),
+                            ],
                           );
                         }
-                      return Center(
-                        child: DataTable(
-                          columnSpacing: 20.0,
+                      return ValueListenableBuilder(
+                        valueListenable: bloc.deduction,
+                        builder: (context, deduction, child) {
+                          if(deduction == null){
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(height: 100),
+                                CircularProgressIndicator(),
+                              ],
+                            );
+                          }
+                          return DataTable(
+                            columnSpacing: 20.0,
                             columns: [
                               DataColumn(
                                   label: Text(
@@ -72,36 +88,25 @@ class _OtherDeductionListState extends State<OtherDeductionList> {
                                     "Vehicle No",
                                     style: GoogleFonts.lato(fontWeight: FontWeight.bold),
                                   )),
-                              // DataColumn(
-                              //     label: Text(
-                              //       "Remark",
-                              //       style: GoogleFonts.lato(fontWeight: FontWeight.bold),
-                              //     )),
                             ],
                             rows:
-                              sallekList.map((e) => DataRow(cells: [
-                                DataCell(Text(
-                                  e['on_date'].toString(),
-                                  style: GoogleFonts.lato(),
-                                )),
-                                DataCell(Center(
-                                  child: Text(
-                                    e['amount'].toString(),
-                                    style: GoogleFonts.lato(),
-                                  ),
-                                )),
-                                DataCell(Text(
-                                  e['vehicle_no'].toString(),
-                                  style: GoogleFonts.lato(),
-                                )),
-                                // DataCell(Text(
-                                //   e['remark'].toString(),
-                                //   style: GoogleFonts.lato(),
-                                // )),
-                              ])).toList(),
-                            ),
-                      );
-                    },),
+                            deduction.map((e) => DataRow(cells: [
+                              DataCell(Text(
+                                DateFormat("yyyy-MM-dd").format(DateTime.parse(e['on_date'].toString())),
+                                style: GoogleFonts.lato(fontSize : 12),
+                              )),
+                              DataCell(Text(
+                                double.parse(e['amount'].toString()).toStringAsFixed(0),
+                                style: GoogleFonts.lato(fontSize : 12),
+                              )),
+                              DataCell(Text(
+                                e['vehicle_no'].toString(),
+                                style: GoogleFonts.lato(fontSize : 12),
+                              )),
+                            ])).toList(),
+                          );
+                        },);
+                    },)
                   )
                 ],
               ),

@@ -1,5 +1,6 @@
 import 'package:alnasheet/view/components/go_back.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:alnasheet/view/components/header.dart';
 import 'package:intl/intl.dart';
@@ -44,23 +45,44 @@ class _MissingShipmentScreenState extends State<MissingShipmentScreen> {
                     valueListenable: bloc.isLoadingMissingStatement,
                     builder: (context, loading, child) {
                       if(loading){
-                        return Center(child: CircularProgressIndicator(),);
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(height: 100),
+                            CircularProgressIndicator(),
+                          ],
+                        );;
                       }
                       return ValueListenableBuilder(
                           valueListenable: bloc.MissingStatement,
                           builder: (context, missingShipment, child) {
                             if(missingShipment == null){
-                              return Center(child: CircularProgressIndicator());
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(height: 100),
+                                  CircularProgressIndicator(),
+                                ],
+                              );
                             }else if(missingShipment.isEmpty
                             ){
-                              return Text('Shipment data not found');
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(height: 100),
+                                  Text("Shipment data not found"),
+                                ],
+                              );
                             }
                             return Center(
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Center(
                                   child: DataTable(
-                                    columnSpacing: 10.0,
+                                    columnSpacing: 20.0,
                                     columns: [
                                       DataColumn(
                                           label: Text(
@@ -74,8 +96,8 @@ class _MissingShipmentScreenState extends State<MissingShipmentScreen> {
                                           )),
                                       DataColumn(
                                           label: Text(
-                                            "   Name",
-                                            style: GoogleFonts.lato(fontWeight: FontWeight.bold),textAlign: TextAlign.center,
+                                            "Name",
+                                            style: GoogleFonts.lato(fontWeight: FontWeight.bold)
                                           )),
                                       DataColumn(
                                           label: Text(
@@ -87,10 +109,10 @@ class _MissingShipmentScreenState extends State<MissingShipmentScreen> {
                                         missingShipment.length, (index) {
                                       return DataRow(
                                           cells: [
-                                            DataCell(Center(child: Container(width: 75, child: Text("${DateFormat.yMd().format(DateTime.parse(missingShipment[index]['on_date'].toString()))}",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: 11),),))),
-                                            DataCell(Center(child: Container(  child: Text("${missingShipment[index]['amount']}",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: 11),),)),),
-                                            DataCell(Center(child: Container(  child: Text("${missingShipment[index]['poc_name']}",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: 11),),))),
-                                            DataCell(Center(child: Container( child: Text("${missingShipment[index]['vehicle_no']}",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: 11),),)))
+                                            DataCell(Text("${DateFormat("yyyy-MM-dd").format(DateTime.parse(missingShipment[index]['on_date'].toString()))}",style: GoogleFonts.lato(fontSize : 12))),
+                                            DataCell(Text("${double.parse(missingShipment[index]['amount'].toString()).toStringAsFixed(0)}",style: GoogleFonts.lato(fontSize : 12)),),
+                                            DataCell(Text("${missingShipment[index]['poc_name']}",style: GoogleFonts.lato(fontSize : 12))),
+                                            DataCell(Text("${missingShipment[index]['vehicle_no']}",style: GoogleFonts.lato(fontSize : 12)))
                                           ]);
                                     }),
                                   ),

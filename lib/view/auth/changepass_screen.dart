@@ -1,5 +1,7 @@
 import 'package:alnasheet/bloc/authBloc.dart';
 import 'package:alnasheet/data/repository/AuthRepository.dart';
+import 'package:alnasheet/view/components/go_back.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -199,6 +201,10 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
           ),
       ),
         ),
+        Positioned(
+            top: 30,
+            left: 10,
+            child: GoBack()),
         ]
         ),
       ),

@@ -23,7 +23,7 @@ class VehicleInspectionScreen extends StatelessWidget {
                     height: 30,
                   ),
                   InspectionLinks(
-                    date: "25-04-2023",
+                    date: "2023-04-25",
                     onTap: () {
                       Navigator.push(
                           context,
@@ -33,15 +33,15 @@ class VehicleInspectionScreen extends StatelessWidget {
                     },
                   ),
                   InspectionLinks(
-                    date: "24-04-2023",
+                    date: "2023-04-25",
                     onTap: () {},
                   ),
                   InspectionLinks(
-                    date: "23-04-2023",
+                    date: "2023-04-25",
                     onTap: () {},
                   ),
                   InspectionLinks(
-                    date: "22-04-2023",
+                    date: "2023-04-25",
                     onTap: () {},
                   ),
                 ],

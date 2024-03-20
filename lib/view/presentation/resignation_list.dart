@@ -6,6 +6,7 @@ import 'package:alnasheet/view/components/go_back.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:alnasheet/view/components/header.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ResignationList extends StatefulWidget {
@@ -46,13 +47,17 @@ class _ResignationListState extends State<ResignationList> {
                       valueListenable: bloc.resignationList,
                       builder: (context, resignationList, child) {
                         if(resignationList == null){
-                          return Center(
-                            child: SizedBox(
-                                height: 300,
-                                child: Center(child: CircularProgressIndicator())),
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(height: 100),
+                              CircularProgressIndicator(),
+                            ],
                           );
                         }
                       return DataTable(
+                        columnSpacing: 20.0,
                           columns: [
                             DataColumn(
                                 label: Text(
@@ -66,31 +71,24 @@ class _ResignationListState extends State<ResignationList> {
                                 )),
                             DataColumn(
                                 label: Text(
-                                  "Clearance",
+                                  "Clearance Date",
                                   style: GoogleFonts.lato(fontWeight: FontWeight.bold),
                                 )),
-                            // DataColumn(
-                            //     label: Text(
-                            //       "",
-                            //       style: GoogleFonts.lato(fontWeight: FontWeight.bold),
-                            //     )),
                           ],
                           rows:
                           resignationList.map((e) => DataRow(cells: [
                               DataCell(Text(
-                                e['resignation_date'].toString(),
-                                style: GoogleFonts.lato(),
+                                DateFormat("yyyy-MM-dd").format(DateTime.parse(e['resignation_date'].toString())),
+                                style: GoogleFonts.lato(fontSize : 12),
                               )),
-                              DataCell(Center(
-                                child: Text(
-                                  e['resignation_reason'].toString(),
-                                  style: GoogleFonts.lato(),
-                                ),
+                              DataCell(Text(
+                                e['resignation_reason'].toString(),
+                                style: GoogleFonts.lato(fontSize : 12),
                               )),
-                            DataCell(Text(
-                              e['clearance_date'].toString(),
-                              style: GoogleFonts.lato(),
-                            )),
+                              DataCell(Text(
+                                e['clearance_date'].toString(),
+                                style: GoogleFonts.lato(fontSize : 12),
+                              )),
                             ])).toList(),
                           );
                     },),

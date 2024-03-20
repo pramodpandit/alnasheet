@@ -2,6 +2,7 @@ import 'package:alnasheet/data/repository/AuthRepository.dart';
 import 'package:alnasheet/data/repository/excess_fuel_list_repo.dart';
 import 'package:alnasheet/data/repository/resignation_list_repo.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,7 +27,7 @@ void main() async{
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     systemNavigationBarColor: Colors.white,
-    statusBarColor: Colors.transparent,
+    statusBarColor: Color(0xFFFFC6E7),
     statusBarIconBrightness: Brightness.dark,
     systemNavigationBarIconBrightness: Brightness.dark,
   ));
@@ -64,7 +65,7 @@ class MyApp extends StatelessWidget {
       child: ScreenUtilInit(
           designSize: const Size(375, 812),
           builder: (context, _) {
-            return const MaterialApp(
+            return MaterialApp(
               debugShowCheckedModeBanner: false,
               home: SplashScreen(),
             );

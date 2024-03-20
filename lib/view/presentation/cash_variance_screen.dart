@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:alnasheet/view/components/header.dart';
 import 'package:intl/intl.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
 import '../../bloc/cash_varuance_bloc.dart';
@@ -44,57 +45,71 @@ class _CashVarianceScreenState extends State<CashVarianceScreen> {
                     valueListenable: bloc.isLoadingCashVariance,
                     builder: (context, loading, child) {
                       if(loading){
-                        return Center(child: CircularProgressIndicator(),);
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(height: 100),
+                            CircularProgressIndicator(),
+                          ],
+                        );
                       }
                       return ValueListenableBuilder(
                         valueListenable: bloc.cashVariance,
                         builder:(context, cashVariance, child) {
                           if(cashVariance ==null){
-                            return Center(child: CircularProgressIndicator(),);
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(height: 100),
+                                CircularProgressIndicator(),
+                              ],
+                            );
                           }else if(cashVariance.isEmpty){
-                            return Center(child: Text('Cash variance data not found '),);
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(height: 100),
+                                Text('Cash variance data not found '),
+                              ],
+                            );
                           }
-                          return      Center(
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Center(
-                                child: DataTable(
-                                  columnSpacing: 10.0,
-                                  columns: [
-                                    DataColumn(
-                                        label: Text(
-                                          "Date",
-                                          style: GoogleFonts.lato(fontWeight: FontWeight.bold),
-                                        )),
-                                    DataColumn(
-                                        label: Text(
-                                          "Cash",
-                                          style: GoogleFonts.lato(fontWeight: FontWeight.bold),
-                                        )),
-                                    DataColumn(
-                                        label: Text(
-                                          "Name",
-                                          style: GoogleFonts.lato(fontWeight: FontWeight.bold),
-                                        )),
-                                    DataColumn(
-                                        label: Text(
-                                          "Vehicle No",
-                                          style: GoogleFonts.lato(fontWeight: FontWeight.bold),
-                                        )),
-                                  ],
-                                  rows: List.generate(
-                                      cashVariance.length, (index) {
-                                    return DataRow(
-                                        cells: [
-                                          DataCell(Center(child: Container(width: 75, child: Text("${DateFormat.yMd().format(DateTime.parse(cashVariance[index]['on_date'].toString()))}",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: 11),),))),
-                                          DataCell(Center(child: Container(  child: Text("${cashVariance[index]['amount']}",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: 11),),)),),
-                                          DataCell(Center(child: Container(  child: Text("${cashVariance[index]['poc_name']}",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: 11),),))),
-                                          DataCell(Center(child: Container( child: Text("${cashVariance[index]['vehicle_no']}",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: 11),),)))
-                                        ]);
-                                  }),
-                                ),
-                              ),
-                            ),
+                          return DataTable(
+                            columnSpacing: 30.0,
+                            columns: [
+                              DataColumn(
+                                  label: Text(
+                                    "Date",
+                                    style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                                  )),
+                              DataColumn(
+                                  label: Text(
+                                    "Cash",
+                                    style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                                  )),
+                              DataColumn(
+                                  label: Text(
+                                    "Name",
+                                    style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                                  )),
+                              DataColumn(
+                                  label: Text(
+                                    "Vehicle No",
+                                    style: GoogleFonts.lato(fontWeight: FontWeight.bold),
+                                  )),
+                            ],
+                            rows: List.generate(
+                                cashVariance.length, (index) {
+                              return DataRow(
+                                  cells: [
+                                    DataCell(Text("${DateFormat("yyyy-MM-dd").format(DateTime.parse(cashVariance[index]['on_date'].toString()))}",style: GoogleFonts.lato(fontSize : 12))),
+                                    DataCell(Text("${double.parse(cashVariance[index]['amount'].toString()).toStringAsFixed(0)}",style: GoogleFonts.lato(fontSize : 12)),),
+                                    DataCell(Text("${cashVariance[index]['poc_name']}",style: GoogleFonts.lato(fontSize : 12))),
+                                    DataCell(Text("${cashVariance[index]['vehicle_no']}",style: GoogleFonts.lato(fontSize : 12)))
+                                  ]);
+                            }),
                           );
 
 

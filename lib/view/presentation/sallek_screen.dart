@@ -4,6 +4,7 @@ import 'package:alnasheet/view/components/go_back.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:alnasheet/view/components/header.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SallekScreen extends StatefulWidget {
@@ -46,19 +47,30 @@ class _SallekScreenState extends State<SallekScreen> {
                       valueListenable: bloc.isLoadingSallek,
                       builder: (context, loading, child) {
                         if(loading){
-                          return Center(child: CircularProgressIndicator(),);
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(height: 100),
+                              CircularProgressIndicator(),
+                            ],
+                          );
                         }
                         return  ValueListenableBuilder(
                           valueListenable: bloc.sallekList,
                           builder: (context, sallekList, child) {
                             if(sallekList == null){
-                              return Center(
-                                child: SizedBox(
-                                    height: 300,
-                                    child: Center(child: CircularProgressIndicator())),
-                              );
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(height: 100),
+                                  CircularProgressIndicator(),
+                                ],
+                              );;
                             }
                             return DataTable(
+                              columnSpacing: 20.0,
                               columns: [
                                 DataColumn(
                                     label: Text(
@@ -75,25 +87,20 @@ class _SallekScreenState extends State<SallekScreen> {
                                       "Vehicle No",
                                       style: GoogleFonts.lato(fontWeight: FontWeight.bold),
                                     )),
-                                // DataColumn(
-                                //     label: Text(
-                                //       "",
-                                //       style: GoogleFonts.lato(fontWeight: FontWeight.bold),
-                                //     )),
                               ],
                               rows:
                               sallekList.map((e) => DataRow(cells: [
                                 DataCell(Text(
-                                  e['on_date'].toString(),
-                                  style: GoogleFonts.lato(),
+                                  DateFormat("yyyy-MM-dd").format(DateTime.parse(e['on_date'].toString())),
+                                  style: GoogleFonts.lato(fontSize : 12),
                                 )),
                                 DataCell(Text(
-                                  e['sallack_amount'].toString(),
-                                  style: GoogleFonts.lato(),
+                                  double.parse(e['sallack_amount'].toString()).toStringAsFixed(0),
+                                  style: GoogleFonts.lato(fontSize : 12),
                                 )),
                                 DataCell(Text(
                                   e['vehicle_no'].toString(),
-                                  style: GoogleFonts.lato(),
+                                  style: GoogleFonts.lato(fontSize : 12),
                                 )),
                               ])).toList(),
                             );
